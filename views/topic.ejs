@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('partials/header') %>
+    <title><%= topic.name %></title>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1><%= topic.name %></h1>
+      <p><%= topic.description %></p>
+      <% exercises.forEach(function(exercise){ %>
+      <div class="card mb-3">
+        <div class="card-body">
+          <p><%= exercise.question %></p>
+          <form
+            action="/topics/<%= topic.id %>/exercises/<%= exercise.id %>"
+            method="post"
+          >
+            <div class="mb-3">
+              <input type="text" name="answer" required class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Answer</button>
+          </form>
+        </div>
+      </div>
+      <% }); %>
+      <a href="/topics" class="btn btn-secondary">Back to Topics</a>
+    </div>
+    <%- include('partials/footer') %>
+  </body>
+</html>

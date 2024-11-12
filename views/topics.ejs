@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('partials/header') %>
+    <title>Topics</title>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1>Math Topics</h1>
+      <div class="list-group">
+        <% topics.forEach(function(topic){ %>
+        <a
+          href="/topics/<%= topic.id %>"
+          class="list-group-item list-group-item-action"
+        >
+          <%= topic.name %>
+        </a>
+        <% }); %>
+      </div>
+      <a href="/logout" class="btn btn-secondary mt-3">Logout</a>
+    </div>
+    <%- include('partials/footer') %>
+  </body>
+</html>

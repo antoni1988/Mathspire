@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('partials/header') %>
+    <title>Login</title>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1>Login</h1>
+      <% if (typeof error !== 'undefined') { %>
+      <div class="alert alert-danger" role="alert"><%= error %></div>
+      <% } %>
+      <form action="/login" method="post">
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input type="text" name="username" required class="form-control" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input
+            type="password"
+            name="password"
+            required
+            class="form-control"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+    </div>
+    <%- include('partials/footer') %>
+  </body>
+</html>

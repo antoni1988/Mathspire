@@ -1,0 +1,27 @@
+<div class="exercise mb-5 p-3 border-bottom">
+  <h4>Exercise <%= exercise.id %> - True/False</h4>
+  <p>Indicate whether each statement is True or False:</p>
+  <form id="form-<%= exercise.id %>" onsubmit="validateAnswer(event, <%= exercise.id %>, 'true_false')" class="mt-3">
+    <div class="table-responsive">
+      <table class="table">
+        <tbody>
+          <% exercise.statements.forEach((statement, index) => { %>
+            <tr>
+              <td><%= statement.text %></td>
+              <td>
+                <div class="btn-group" role="group">
+                  <input type="radio" class="btn-check" name="answer-<%= exercise.id %>-<%= index %>" value="true" id="true-<%= exercise.id %>-<%= index %>" required>
+                  <label class="btn btn-outline-success btn-sm" for="true-<%= exercise.id %>-<%= index %>">True</label>
+                  <input type="radio" class="btn-check" name="answer-<%= exercise.id %>-<%= index %>" value="false" id="false-<%= exercise.id %>-<%= index %>" required>
+                  <label class="btn btn-outline-danger btn-sm" for="false-<%= exercise.id %>-<%= index %>">False</label>
+                </div>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+    <div id="feedback-<%= exercise.id %>"></div>
+    <button type="submit" class="btn btn-primary mt-2">Submit</button>
+  </form>
+</div>

@@ -1,0 +1,20 @@
+<div class="exercise mb-5 p-3 border-bottom">
+  <h4>Exercise <%= exercise.id %> - Multiple Choice</h4>
+  <p><%= exercise.question %></p>
+  <form id="form-<%= exercise.id %>" onsubmit="validateAnswer(event, <%= exercise.id %>, 'multiple_choice')" class="mt-3">
+    <% exercise.options.forEach((option, index) => { %>
+      <div class="form-check">
+        <input 
+          class="form-check-input" 
+          type="radio" 
+          name="answer-<%= exercise.id %>" 
+          value="<%= index %>" 
+          required
+        />
+        <label class="form-check-label"><%= option %></label>
+      </div>
+    <% }); %>
+    <div id="feedback-<%= exercise.id %>"></div>
+    <button type="submit" class="btn btn-primary mt-2">Submit</button>
+  </form>
+</div>

@@ -1,0 +1,25 @@
+<div class="exercise mb-5 p-3 border-bottom">
+  <h4>Exercise <%= exercise.id %> - Problem Solving</h4>
+  <p><%= exercise.question %></p>
+  <form id="form-<%= exercise.id %>" onsubmit="validateAnswer(event, <%= exercise.id %>, 'open_question')" class="mt-3">
+    <div class="mb-3">
+      <label class="form-label"><%= exercise.inputLabel %></label>
+      <input 
+        type="text" 
+        id="answer-<%= exercise.id %>" 
+        class="form-control" 
+        placeholder="<%= exercise.placeholder %>" 
+        required
+      />
+    </div>
+    <div id="feedback-<%= exercise.id %>"></div>
+    <div class="btn-group mt-2">
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <% if (exercise.showAnswerButton) { %>
+        <button type="button" class="btn btn-secondary" onclick="showAnswer(<%= exercise.id %>)">
+          Show Answer
+        </button>
+      <% } %>
+    </div>
+  </form>
+</div>

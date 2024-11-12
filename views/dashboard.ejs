@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('partials/header') %>
+    <title>Dashboard - Math Course</title>
+  </head>
+  <body>
+    <main>
+      <div class="container mt-5">
+        <h1>Welcome back, <%= user.username %>!</h1>
+
+        <!-- Progress Section -->
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">Your Progress</h5>
+            <div class="progress">
+              <div
+                class="progress-bar"
+                role="progressbar"
+                style="width: '<%= progressPercentage %>%'"
+              >
+                <%= progressPercentage %>% Complete
+              </div>
+            </div>
+            
+            <p class="mt-2">
+              Completed <%= completedExercises %> out of <%= totalExercises %>
+              exercises
+            </p>
+          </div>
+        </div>
+
+        <!-- Recommended Topics -->
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card mb-4">
+              <div class="card-body">
+                <h5 class="card-title">Recommended Topics</h5>
+                <div class="list-group">
+                  <% recommendedTopics.forEach(function(topic) { %>
+                  <a
+                    href="/topics/<%= topic.id %>"
+                    class="list-group-item list-group-item-action"
+                  >
+                    <%= topic.name %>
+                    <small class="text-muted d-block">
+                      <%= topic.completion_rate %>% completed
+                    </small>
+                  </a>
+                  <% }); %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Activity -->
+          <div class="col-md-6">
+            <div class="card mb-4">
+              <div class="card-body">
+                <h5 class="card-title">Recent Activity</h5>
+                <div class="list-group">
+                  <% recentTopics.forEach(function(topic) { %>
+                  <a
+                    href="/topics/<%= topic.id %>"
+                    class="list-group-item list-group-item-action"
+                  >
+                    <%= topic.name %>
+                    <small class="text-muted d-block">
+                      Last accessed: <%= topic.last_accessed %>
+                    </small>
+                  </a>
+                  <% }); %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- All Topics Section -->
+          <div class="row mt-4">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">All Topics</h5>
+                  <div class="list-group">
+                    <% topics.forEach(function(topic) { %>
+                    <a
+                      href="/topics/<%= topic.id %>"
+                      class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                    >
+                      <%= topic.name %>
+                      <span class="badge bg-primary rounded-pill">
+                        <%= topic.completion_rate || 0 %>%
+                      </span>
+                    </a>
+                    <% }); %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <%- include('partials/footer') %>
+  </body>
+</html>
