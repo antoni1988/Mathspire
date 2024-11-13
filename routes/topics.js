@@ -57,26 +57,26 @@ router.get("/:id", requireLogin, async (req, res) => {
 router.get("/:id/exercises/:exerciseId", requireLogin, async (req, res) => {
   const topicId = req.params.id;
   const userId = req.session.userId;
+  const pageNumber = req.params.exerciseId;
 
   try {
-    // Get exercises and progress data with proper exercise IDs
+    // Get exercises and progress data
     const [dbExercises] = await db.promise().query(
-      `SELECT e.id, p.completed_at 
+      `SELECT e.id, e.exercise_number, p.completed_at 
        FROM exercises e 
        LEFT JOIN progress p ON p.exercise_id = e.id AND p.user_id = ? 
-       WHERE e.topic_id = ? AND e.exercise_type = 'factoring'`,
-      [userId, topicId]
+       WHERE e.topic_id = ? AND e.page_number = ?`,
+      [userId, topicId, pageNumber]
     );
 
-    // Add console.log to debug
     console.log("Database exercises:", dbExercises);
 
-    res.render(`topics/quadratic_equations/exercise${req.params.exerciseId}`, {
+    res.render(`topics/quadratic_equations/exercise${pageNumber}`, {
       dbExercises,
       req,
     });
   } catch (err) {
-    console.error(err);
+    console.error("Error:", err);
     res.status(500).send("An error occurred");
   }
 });

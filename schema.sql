@@ -27,8 +27,9 @@ CREATE TABLE exercises (
     topic_id INT,
     exercise_number INT NOT NULL,
     exercise_type VARCHAR(50) NOT NULL,
+    page_number INT NOT NULL,
     FOREIGN KEY (topic_id) REFERENCES topics(id),
-    UNIQUE KEY topic_exercise (topic_id, exercise_number, exercise_type)
+    UNIQUE KEY topic_exercise_page (topic_id, exercise_type, page_number, exercise_number)
 );
 
 CREATE TABLE progress (
@@ -53,20 +54,15 @@ INSERT INTO topic_prerequisites (topic_id, prerequisite_id) VALUES
 (3, 2),  -- Quadratic Equations requires Powers
 (4, 3);  -- Optimization requires Quadratic Equations
 
--- Finally, insert exercises
-INSERT INTO exercises (topic_id, exercise_number, exercise_type) VALUES
--- Basic exercises
-(3, 1, 'basic'),
-(3, 2, 'basic'),
-(3, 3, 'basic'),
-(3, 4, 'basic'),
--- Factoring exercises
-(3, 1, 'factoring'),  -- x² - 4x + 4
-(3, 2, 'factoring'),  -- x² + 6x + 9
-(3, 3, 'factoring'),  -- x² - 9
-(3, 4, 'factoring'),  -- x² - 2x - 8
-(3, 5, 'factoring'),  -- x² + 7x + 12
--- Word problem exercises
-(3, 1, 'word_problems'),
-(3, 2, 'word_problems'),
-(3, 3, 'word_problems');
+INSERT INTO exercises (topic_id, exercise_number, exercise_type, page_number) VALUES
+-- quadratic equation
+(3, 1, 'basic', 1),
+(3, 2, 'basic', 1),
+(3, 3, 'basic', 1),
+(3, 4, 'basic', 1),
+(3, 1, 'factoring', 2),
+(3, 2, 'factoring', 2),
+(3, 3, 'factoring', 2);
+(3, 1, 'word_problems', 3),
+(3, 2, 'word_problems', 3),
+(3, 3, 'word_problems', 3);

@@ -2,7 +2,7 @@
 <html>
   <head>
     <%- include('../../partials/header') %>
-    <title>Mixed Practice - Quadratic Equations</title>
+    <title>Word Problems - Quadratic Equations</title>
   </head>
   <body>
     <main>
@@ -11,11 +11,10 @@
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/topics">Topics</a></li>
             <li class="breadcrumb-item"><a href="/topics/3">Quadratic Equations</a></li>
-            <li class="breadcrumb-item active">Mixed Practice</li>
+            <li class="breadcrumb-item active">Word Problems</li>
           </ol>
         </nav>
-
-        <h1>Mixed Practice Exercises</h1>
+        <h1>Word Problems Practice</h1>
         <div class="card mb-4">
           <div class="card-body">
             <div class="exercises">
@@ -25,41 +24,39 @@
                   
                 const exercises = [
                   {
-                    exercise_number: 1, // Changed from id: 5
+                    exercise_number: 1,
                     type: 'multiple_choice',
-                    question: 'What is the factored form of x² - 4x + 4?',
+                    question: 'A ball is thrown upward with an initial velocity of 20 m/s. The height h (in meters) after t seconds is given by h = -4.9t² + 20t. What is the maximum height reached by the ball?',
                     options: [
-                      '(x-2)(x-2)',
-                      '(x+2)(x+2)',
-                      '(x-2)(x+2)',
-                      '(x-4)(x+1)'
+                      '10 meters',
+                      '20.4 meters',
+                      '40.8 meters',
+                      '50 meters'
                     ],
-                    answer: 0,
+                    answer: 1,
                     completed_at: null
                   },
                   {
-                    exercise_number: 2, // Changed from id: 6
-                    type: 'true_false',
-                    statements: [
-                      {
-                        text: 'The expression x² + 6x + 9 can be factored as (x+3)(x+3)',
-                        answer: true
-                      },
-                      {
-                        text: 'The expression x² - 9 can be factored as (x+3)(x-3)',
-                        answer: true
-                      }
-                    ],
-                    completed_at: null
-                  },
-                  {
-                    exercise_number: 3, // Changed from id: 7
+                    exercise_number: 2,
                     type: 'open_question',
-                    question: 'Factor the expression: x² - 2x - 8',
-                    inputLabel: 'Enter your answer in the form (x±a)(x±b):',
-                    placeholder: 'e.g. (x+2)(x-4)',
-                    answer: '(x+2)(x-4)',
+                    question: 'A rectangle has a perimeter of 24 units and its area is 35 square units. Find the length of the rectangle.',
+                    inputLabel: 'Enter the length (larger dimension) of the rectangle:',
+                    placeholder: 'e.g. 7',
+                    answer: '7',
                     showAnswerButton: true,
+                    completed_at: null
+                  },
+                  {
+                    exercise_number: 3,
+                    type: 'multiple_choice',
+                    question: 'A farmer wants to fence a rectangular field. He has 100 meters of fencing material and wants to maximize the area. What should be the length of the field?',
+                    options: [
+                      '20 meters',
+                      '25 meters',
+                      '30 meters',
+                      '35 meters'
+                    ],
+                    answer: 1,
                     completed_at: null
                   }
                 ];
@@ -69,16 +66,11 @@
                   exercises.forEach(ex => {
                     const dbExercise = dbExercises.find(e => e.exercise_number === ex.exercise_number);
                     if (dbExercise) {
-                      ex.id = dbExercise.id;  // Keep database ID for form submission
+                      ex.id = dbExercise.id;
                       ex.completed_at = dbExercise.completed_at;
                     }
                   });
                 }
-
-                // Debug logging
-                console.log('Updated exercises:', exercises);
-
-
               %>
 
               <% exercises.forEach(function(exercise) { %>
@@ -87,16 +79,13 @@
             </div>
           </div>
         </div>
-
         <a href="/topics/3" class="btn btn-secondary">Back to Topic</a>
       </div>
     </main>
-
     <script src="/js/exercise_validation.js"></script>
     <script>
       const exercises = <%- JSON.stringify(exercises) %>;
     </script>
-
     <%- include('../../partials/footer') %>
   </body>
 </html>
