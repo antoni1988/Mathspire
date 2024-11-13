@@ -56,24 +56,24 @@ router.get("/:id", requireLogin, async (req, res) => {
 // Update the route handler to be async
 router.get("/:id/exercises/:exerciseId", requireLogin, async (req, res) => {
   const topicId = req.params.id;
-  const exerciseId = req.params.exerciseId;
-  
+  const userId = req.session.userId;
+
   try {
-    const [topic] = await db.promise().query(
-      "SELECT * FROM topics WHERE id = ?", 
-      [topicId]
+    // Get exercises and progress data with proper exercise IDs
+    const [dbExercises] = await db.promise().query(
+      `SELECT e.id, p.completed_at 
+       FROM exercises e 
+       LEFT JOIN progress p ON p.exercise_id = e.id AND p.user_id = ? 
+       WHERE e.topic_id = ? AND e.exercise_type = 'factoring'`,
+      [userId, topicId]
     );
 
-    // Get all exercises for this type
-    const [exercises] = await db.promise().query(
-      "SELECT * FROM exercises WHERE topic_id = ? AND exercise_type = ?",
-      [topicId, 'factoring']
-    );
-    
-    res.render(`topics/quadratic_equations/exercise${exerciseId}`, {
-      topic: topic[0],
-      exercises,
-      req
+    // Add console.log to debug
+    console.log("Database exercises:", dbExercises);
+
+    res.render(`topics/quadratic_equations/exercise${req.params.exerciseId}`, {
+      dbExercises,
+      req,
     });
   } catch (err) {
     console.error(err);

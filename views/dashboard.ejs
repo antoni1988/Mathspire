@@ -9,27 +9,28 @@
       <div class="container mt-5">
         <h1>Welcome back, <%= user.username %>!</h1>
 
-        <!-- Progress Section -->
-        <div class="card mb-4">
-          <div class="card-body">
-            <h5 class="card-title">Your Progress</h5>
-            <div class="progress">
-              <div
-                class="progress-bar"
-                role="progressbar"
-                style="width: '<%= progressPercentage %>%'"
-              >
-                <%= progressPercentage %>% Complete
-              </div>
-            </div>
-            
-            <p class="mt-2">
-              Completed <%= completedExercises %> out of <%= totalExercises %>
-              exercises
-            </p>
-          </div>
-        </div>
-
+<!-- Progress Section -->
+<div class="card mb-4">
+  <div class="card-body">
+    <h5 class="card-title">Your Progress</h5>
+    <div class="progress">
+      <div
+        class="progress-bar"
+        role="progressbar"
+        style="width: <%= progressPercentage %>%"
+        aria-valuenow="<%= progressPercentage %>"
+        aria-valuemin="0"
+        aria-valuemax="100"
+      >
+        <%= progressPercentage %>% Complete
+      </div>
+    </div>
+    
+    <p class="mt-2">
+      Completed <%= completedExercises %> out of <%= totalExercises %> exercises
+    </p>
+  </div>
+</div>
         <!-- Recommended Topics -->
         <div class="row">
           <div class="col-md-6">

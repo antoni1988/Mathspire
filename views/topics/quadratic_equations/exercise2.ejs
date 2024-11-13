@@ -20,9 +20,12 @@
           <div class="card-body">
             <div class="exercises">
               <% 
+                // Debug logging
+                console.log('dbExercises:', typeof dbExercises !== 'undefined' ? dbExercises : 'undefined');
+                  
                 const exercises = [
                   {
-                    id: 1,
+                    id: 5,
                     type: 'multiple_choice',
                     question: 'What is the factored form of x² - 4x + 4?',
                     options: [
@@ -31,10 +34,11 @@
                       '(x-2)(x+2)',
                       '(x-4)(x+1)'
                     ],
-                    answer: 0
+                    answer: 0,
+                    completed_at: null // Will be updated from database
                   },
                   {
-                    id: 2,
+                    id: 6,
                     type: 'true_false',
                     statements: [
                       {
@@ -45,18 +49,36 @@
                         text: 'The expression x² - 9 can be factored as (x+3)(x-3)',
                         answer: true
                       }
-                    ]
+                    ],
+                    completed_at: null // Will be updated from database
                   },
                   {
-                    id: 3,
+                    id: 7,
                     type: 'open_question',
                     question: 'Factor the expression: x² - 2x - 8',
                     inputLabel: 'Enter your answer in the form (x±a)(x±b):',
                     placeholder: 'e.g. (x+2)(x-4)',
                     answer: '(x+2)(x-4)',
-                    showAnswerButton: true
+                    showAnswerButton: true,
+                    completed_at: null // Will be updated from database
                   }
                 ];
+
+                // Update completed_at from database results
+                if (typeof dbExercises !== 'undefined') {
+                  exercises.forEach(ex => {
+                    const dbExercise = dbExercises.find(e => e.id === ex.id);
+                    console.log('Exercise ID:', ex.id, 'DB Exercise:', dbExercise);
+                    if (dbExercise) {
+                      ex.completed_at = dbExercise.completed_at;
+                    }
+                  });
+                }
+
+                // Debug logging
+                console.log('Updated exercises:', exercises);
+
+
               %>
 
               <% exercises.forEach(function(exercise) { %>

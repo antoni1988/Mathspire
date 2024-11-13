@@ -1,4 +1,9 @@
-<div class="exercise mb-5 p-3 border-bottom">
+<div class="exercise mb-5 p-3 border-bottom position-relative">
+  <% if (exercise.completed_at) { %>
+    <div class="position-absolute top-0 end-0 mt-2 me-2">
+      <i class="fas fa-check-circle text-success" title="Completed"></i>
+    </div>
+  <% } %>
   <h4>Exercise <%= exercise.id %> - True/False</h4>
   <p>Indicate whether each statement is True or False:</p>
   <form id="form-<%= exercise.id %>" onsubmit="validateAnswer(event, <%= exercise.id %>, 'true_false')" class="mt-3">
