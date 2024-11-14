@@ -21,13 +21,15 @@
               <% 
                 const exercises = [
                   {
+                    exercise_number: 1,
                     type: 'multiple_choice',
                     question: 'What is 2³?',2
                     options: ['4', '6', '8', '16'],
                     answer: 2,
                     completed_at: null
                   },
-                  {
+                  { 
+                    exercise_number: 2,
                     type: 'true_false',
                     statements: [
                       {
@@ -42,6 +44,7 @@
                     completed_at: null
                   },
                   {
+                    exercise_number: 3,
                     type: 'open_question',
                     question: 'Simplify: 2³ × 2²',
                     inputLabel: 'Enter your answer as a single power of 2:',
@@ -54,8 +57,9 @@
 
                 if (typeof dbExercises !== 'undefined') {
                   exercises.forEach(ex => {
-                    const dbExercise = dbExercises.find(e => e.id === ex.id);
+                    const dbExercise = dbExercises.find(e => e.exercise_number === ex.exercise_number);
                     if (dbExercise) {
+                      ex.id = dbExercise.id;  // Keep database ID for form submission
                       ex.completed_at = dbExercise.completed_at;
                     }
                   });
@@ -67,7 +71,11 @@
             </div>
           </div>
         </div>
-        <a href="/topics/2" class="btn btn-secondary">Back to Topic</a>
+        <%- include('../../components/exercise_navigation', { 
+          topicId,
+          currentPage,
+          totalPages 
+        }) %>
       </div>
     </main>
     <script src="/js/exercise_validation.js"></script>

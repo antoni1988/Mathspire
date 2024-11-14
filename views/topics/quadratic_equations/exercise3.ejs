@@ -73,13 +73,17 @@
                 }
               %>
 
-              <% exercises.forEach(function(exercise) { %>
+             <% exercises.forEach(function(exercise) { %>
                 <%- include(`../../components/exercises/${exercise.type}`, { exercise }) %>
               <% }); %>
             </div>
           </div>
         </div>
-        <a href="/topics/3" class="btn btn-secondary">Back to Topic</a>
+        <%- include('../../components/exercise_navigation', { 
+          topicId,
+          currentPage,
+          totalPages 
+        }) %>
       </div>
     </main>
     <script src="/js/exercise_validation.js"></script>

@@ -71,7 +71,11 @@ function handleExerciseResult(exerciseId, isCorrect) {
 }
 
 function saveProgress(exerciseId) {
-  fetch(`/topics/3/exercises/${exerciseId}`, {
+  // Get topic ID from URL path
+  const pathParts = window.location.pathname.split("/");
+  const topicId = pathParts[2]; // URL format is /topics/{topicId}/exercises/{exerciseId}
+
+  fetch(`/topics/${topicId}/exercises/${exerciseId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ exerciseId }),
@@ -85,6 +89,17 @@ function saveProgress(exerciseId) {
     .then(() => {
       showSuccess(exerciseId);
       disableForm(exerciseId);
+      // Add checkmark after successful completion
+      const exerciseDiv = document
+        .querySelector(`#form-${exerciseId}`)
+        .closest(".exercise");
+      if (exerciseDiv) {
+        const checkmark = document.createElement("div");
+        checkmark.className = "position-absolute top-0 end-0 mt-2 me-2";
+        checkmark.innerHTML =
+          '<i class="fas fa-check-circle text-success" title="Completed"></i>';
+        exerciseDiv.appendChild(checkmark);
+      }
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -109,6 +124,16 @@ function disableForm(exerciseId) {
     .querySelectorAll("input, button")
     .forEach((el) => (el.disabled = true));
 }
+
+function toggleSteps(exerciseId) {
+  const stepsElement = document.getElementById(`steps-${exerciseId}`);
+  if (stepsElement) {
+    stepsElement.classList.toggle('show');
+    const button = event.target;
+    button.textContent = stepsElement.classList.contains('show') ? 'Hide Steps' : 'Show Steps';
+  }
+}
+
 
 function showAnswer(exerciseId) {
   const exercise = exercises.find((ex) => ex.id === exerciseId);

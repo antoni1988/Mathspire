@@ -4,7 +4,7 @@
       <i class="fas fa-check-circle text-success" title="Completed"></i>
     </div>
   <% } %>
-  <h4>Exercise <%= exercise.id %> - True/False</h4>
+  <h4>Exercise <%= exercise.exercise_number %> - True/False</h4>
   <p>Indicate whether each statement is True or False:</p>
   <form id="form-<%= exercise.id %>" onsubmit="validateAnswer(event, <%= exercise.id %>, 'true_false')" class="mt-3">
     <div class="table-responsive">
@@ -27,6 +27,16 @@
       </table>
     </div>
     <div id="feedback-<%= exercise.id %>"></div>
-    <button type="submit" class="btn btn-primary mt-2">Submit</button>
+    <div class="btn-group mt-2">
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <% if (exercise.steps) { %>
+        <button type="button" class="btn btn-info" onclick="toggleSteps(<%= exercise.id %>)">
+          Show Steps
+        </button>
+      <% } %>
+    </div>
   </form>
+  <% if (exercise.steps) { %>
+    <%- include('../solution_steps', { exercise }) %>
+  <% } %>
 </div>

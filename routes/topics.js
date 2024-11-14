@@ -57,23 +57,34 @@ router.get("/:id", requireLogin, async (req, res) => {
 router.get("/:id/exercises/:exerciseId", requireLogin, async (req, res) => {
   const topicId = req.params.id;
   const userId = req.session.userId;
-  const pageNumber = req.params.exerciseId;
+  const currentPage = parseInt(req.params.exerciseId);
 
   try {
+    // Get total number of exercise pages for this topic
+    const [pageCount] = await db.promise().query(
+      `SELECT COUNT(DISTINCT page_number) as total_pages 
+       FROM exercises 
+       WHERE topic_id = ?`,
+      [topicId]
+    );
+
+    const totalPages = pageCount[0].total_pages;
+
     // Get exercises and progress data
     const [dbExercises] = await db.promise().query(
       `SELECT e.id, e.exercise_number, p.completed_at 
        FROM exercises e 
        LEFT JOIN progress p ON p.exercise_id = e.id AND p.user_id = ? 
        WHERE e.topic_id = ? AND e.page_number = ?`,
-      [userId, topicId, pageNumber]
+      [userId, topicId, currentPage]
     );
 
-    console.log("Database exercises:", dbExercises);
-
-    res.render(`topics/quadratic_equations/exercise${pageNumber}`, {
+    res.render(`topics/quadratic_equations/exercise${currentPage}`, {
       dbExercises,
       req,
+      topicId,
+      currentPage,
+      totalPages,
     });
   } catch (err) {
     console.error("Error:", err);

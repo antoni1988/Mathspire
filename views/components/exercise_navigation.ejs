@@ -1,0 +1,18 @@
+<div class="d-flex justify-content-between align-items-center mt-3">
+  <div>
+    <% if (currentPage > 1) { %>
+      <a href="/topics/<%= topicId %>/exercises/<%= currentPage - 1 %>" class="btn btn-primary me-2">
+        <i class="fas fa-arrow-left"></i> Previous Exercise Set
+      </a>
+    <% } %>
+    <a href="/topics/<%= topicId %>" class="btn btn-secondary">Back to Topic</a>
+  </div>
+  
+  <% if (currentPage < totalPages) { %>
+    <div>
+      <a href="/topics/<%= topicId %>/exercises/<%= currentPage + 1 %>" class="btn btn-primary">
+        Next Exercise Set <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+  <% } %>
+</div>

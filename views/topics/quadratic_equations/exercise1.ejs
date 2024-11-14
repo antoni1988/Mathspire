@@ -24,7 +24,7 @@
                   
                 const exercises = [
                   {
-                    id: 1,
+                    exercise_number: 1,
                     type: 'multiple_choice',
                     question: 'Solve the equation: x² + 2x + 1 = 0',
                     options: [
@@ -34,10 +34,17 @@
                       'x = 1 (twice)'
                     ],
                     answer: 2,
-                    completed_at: null
+                    completed_at: null,
+                    steps: [
+                      "First, recognize this is a perfect square trinomial: x² + 2x + 1 = (x + 1)²",
+                      "Set (x + 1)² = 0",
+                      "Therefore x + 1 = 0",
+                      "Solve for x: x = -1",
+                      "Since this is a perfect square, the solution -1 occurs twice"
+                    ]
                   },
                   {
-                    id: 2,
+                    exercise_number: 2,
                     type: 'true_false',
                     statements: [
                       {
@@ -49,20 +56,31 @@
                         answer: true
                       }
                     ],
-                    completed_at: null
+                    completed_at: null,
+                    steps: [
+                      "The discriminant is b² - 4ac",
+                      "If the discriminant is positive, there are two real solutions",
+                      "If the discriminant is zero, there is one repeated real solution",
+                      "If the discriminant is negative, there are two complex solutions"
+                    ]
                   },
                   {
-                    id: 3,
+                    exercise_number: 3,
                     type: 'open_question',
                     question: 'Solve x² - 4 = 0 using the quadratic formula. Enter your answers separated by a comma.',
                     inputLabel: 'Enter your answer in the form "a,b" where a and b are the solutions:',
                     placeholder: 'e.g. -2,2',
                     answer: '-2,2',
                     showAnswerButton: true,
-                    completed_at: null
+                    completed_at: null,
+                    steps: [
+                      "The quadratic formula is x = (-b ± √(b² - 4ac)) / 2a",
+                      "For x² - 4 = 0, a = 1, b = 0, and c = -4",
+                      "Substitute these values into the formula and solve for x"
+                    ]
                   },
                   {
-                    id: 4,
+                    exercise_number: 4,
                     type: 'multiple_choice',
                     question: 'For the equation x² + 6x + 9 = 0, the discriminant (b² - 4ac) is:',
                     options: [
@@ -79,8 +97,9 @@
                 // Update completed_at from database results
                 if (typeof dbExercises !== 'undefined') {
                   exercises.forEach(ex => {
-                    const dbExercise = dbExercises.find(e => e.id === ex.id);
+                    const dbExercise = dbExercises.find(e => e.exercise_number === ex.exercise_number);
                     if (dbExercise) {
+                      ex.id = dbExercise.id;  // Keep database ID for form submission
                       ex.completed_at = dbExercise.completed_at;
                     }
                   });
@@ -92,7 +111,11 @@
             </div>
           </div>
         </div>
-        <a href="/topics/3" class="btn btn-secondary">Back to Topic</a>
+        <%- include('../../components/exercise_navigation', { 
+          topicId,
+          currentPage,
+          totalPages 
+        }) %>
       </div>
     </main>
     <script src="/js/exercise_validation.js"></script>
