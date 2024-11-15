@@ -6,7 +6,6 @@ const path = require("path");
 
 const app = express();
 
-// Database connection
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -19,7 +18,6 @@ db.connect((err) => {
   console.log("Connected to database");
 });
 
-// Middleware
 app.use(
   session({
     secret: "your_secret_key",
@@ -31,7 +29,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 
-// Routes
 const authRoutes = require("./routes/auth");
 const topicRoutes = require("./routes/topics");
 

@@ -13,32 +13,26 @@ function requireGuest(req, res, next) {
   next();
 }
 
-
-// Home page
 router.get("/",requireGuest, (req, res) => {
   res.render("home", { req });
 });
 
 
-// Registration page
 router.get("/register",requireGuest, (req, res) => {
   res.render("register", { req });
 });
 
 
-// Handle registration
 router.post("/register", (req, res) => {
   const { username, password } = req.body;
   User.create(username, password, (err) => {
     if (err) {
-      // Check if it's a duplicate entry error (MySQL error code 1062)
       if (err.code === "ER_DUP_ENTRY") {
         return res.render("register", {
           req,
           error: "Username already exists. Please choose another username.",
         });
       }
-      // Handle other errors
       console.error(err);
       return res.render("register", {
         req,
@@ -49,12 +43,10 @@ router.post("/register", (req, res) => {
   });
 });
 
-// Login page
 router.get("/login", (req, res) => {
   res.render("login", { req });
 });
 
-// Handle login
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
   User.authenticate(username, password, (err, user) => {
@@ -66,7 +58,7 @@ router.post("/login", (req, res) => {
     }
     if (user) {
       req.session.userId = user.id;
-      res.redirect("/dashboard"); // Changed from /topics to /dashboard
+      res.redirect("/dashboard");
     } else {
       res.render("login", {
         req,
@@ -76,7 +68,6 @@ router.post("/login", (req, res) => {
   });
 });
 
-// Add new dashboard route
 router.get("/dashboard", (req, res) => {
   if (!req.session.userId) {
     return res.redirect("/login");
@@ -84,14 +75,12 @@ router.get("/dashboard", (req, res) => {
 
   const userId = req.session.userId;
 
-  // Get user info and progress data
   db.query(
     "SELECT username FROM users WHERE id = ?",
     [userId],
     (err, userResults) => {
       if (err) throw err;
 
-      // Get exercise completion stats
       db.query(
         `
       SELECT 
@@ -109,7 +98,6 @@ router.get("/dashboard", (req, res) => {
           const progressPercentage =
             Math.round((completedExercises / totalExercises) * 100) || 0;
 
-          // Get topics with completion rates
           db.query(
             `
         SELECT t.*, 
@@ -125,12 +113,10 @@ router.get("/dashboard", (req, res) => {
             (err, allTopics) => {
               if (err) throw err;
 
-              // Get recommended topics (topics with low completion rate)
               const recommendedTopics = allTopics
                 .filter((topic) => topic.completion_rate < 100)
                 .slice(0, 3);
 
-              // Get recent activity
               db.query(
                 `
   SELECT DISTINCT t.*, MAX(p.completed_at) as last_accessed
@@ -165,14 +151,12 @@ router.get("/dashboard", (req, res) => {
   );
 });
 
-// Logout
 router.get("/logout", (req, res) => {
   req.session.destroy();
   res.redirect("/login");
 });
 
 
-// Profile page
 router.get("/profile", (req, res) => {
   if (!req.session.userId) {
     return res.redirect("/login");

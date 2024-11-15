@@ -1,9 +1,8 @@
 const ExerciseValidator = {
   validateMultipleChoice(selected, answer) {
-    // Safely handle undefined values and convert to strings
     if (!selected) return false;
     const selectedValue = selected.value;
-    const correctAnswer = String(answer); // Convert answer to string
+    const correctAnswer = String(answer);
     return selectedValue === correctAnswer;
   },
 
@@ -22,8 +21,6 @@ const ExerciseValidator = {
 function validateAnswer(event, exerciseId, type) {
   event.preventDefault();
   let isCorrect = false;
-
-  // Find exercise by ID from the global exercises array
   const exercise = exercises.find((ex) => ex.id === exerciseId);
   if (!exercise) {
     console.error(`Exercise ${exerciseId} not found`);
@@ -71,9 +68,8 @@ function handleExerciseResult(exerciseId, isCorrect) {
 }
 
 function saveProgress(exerciseId) {
-  // Get topic ID from URL path
   const pathParts = window.location.pathname.split("/");
-  const topicId = pathParts[2]; // URL format is /topics/{topicId}/exercises/{exerciseId}
+  const topicId = pathParts[2];
 
   fetch(`/topics/${topicId}/exercises/${exerciseId}`, {
     method: "POST",
@@ -89,7 +85,6 @@ function saveProgress(exerciseId) {
     .then(() => {
       showSuccess(exerciseId);
       disableForm(exerciseId);
-      // Add checkmark after successful completion
       const exerciseDiv = document
         .querySelector(`#form-${exerciseId}`)
         .closest(".exercise");
