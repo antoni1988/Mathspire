@@ -7,7 +7,6 @@ const db = mysql.createConnection({
   database: "math_course",
 });
 
-// Add helper function for tracking progress
 db.trackProgress = async (userId, exerciseId) => {
   try {
     const [result] = await db
@@ -19,7 +18,6 @@ db.trackProgress = async (userId, exerciseId) => {
     return result;
   } catch (err) {
     if (err.code === "ER_DUP_ENTRY") {
-      // Progress already exists, not an error
       return null;
     }
     throw err;

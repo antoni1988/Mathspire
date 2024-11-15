@@ -1,0 +1,10 @@
+<div class="solution-steps collapse" id="steps-<%= exercise.id %>">
+  <div class="card card-body mt-2">
+    <h5>Solution Steps:</h5>
+    <ol class="steps-list">
+      <% exercise.steps.forEach(step => { %>
+        <li><%= step %></li>
+      <% }); %>
+    </ol>
+  </div>
+</div>

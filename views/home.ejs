@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include('partials/header') %>
+    <title>Math Course - Learn Mathematics Online</title>
+</head>
+<body>
+    <% include('partials/nav'); %>
+    <main>
+        <div class="hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4">Welcome to Math Course</h1>
+                    <p class="lead">Master mathematics through interactive lessons and exercises</p>
+                    <div class="mt-4">
+                        <a href="/register" class="btn btn-primary btn-lg me-2">Get Started</a>
+                        <a href="/login" class="btn btn-outline-secondary btn-lg">Sign In</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 p-5">
+                    <img src="/images/course_home.jpg" class="img-fluid rounded" alt="Math Education">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <i class="fas fa-book"></i>
+                    <h3>Comprehensive Topics</h3>
+                    <p>Access a wide range of mathematical topics from basic to advanced levels.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <i class="fas fa-tasks"></i>
+                    <h3>Interactive Exercises</h3>
+                    <p>Practice with hands-on exercises and get immediate feedback.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Track Progress</h3>
+                    <p>Monitor your learning journey with detailed progress tracking.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+    <% include('partials/footer'); %>
+</body>
+</html>

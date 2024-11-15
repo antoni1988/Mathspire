@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../../partials/header') %>
+    <title>Quadratic Equations</title>
+  </head>
+  <body>
+    <main>
+      <div class="container mt-5">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/topics">Topics</a></li>
+            <li class="breadcrumb-item active">Quadratic Equations</li>
+          </ol>
+        </nav>
+
+        <h1>Quadratic Equations</h1>
+
+        <!-- Theory Section -->
+        <div class="card mb-4">
+          <div class="card-body">
+            <h2>Introduction</h2>
+            <div class="row align-items-center">
+              <div class="col-md-8">
+                <p>
+                  A quadratic equation is a polynomial equation of degree 2,
+                  which can be written in the standard form:
+                </p>
+                <div class="text-center my-3">
+                  <strong>ax² + bx + c = 0</strong>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <img
+                  src="/images/topics/quadratic_equation/exampleFunction.png"
+                  alt="Quadratic Equation Graph"
+                  class="img-fluid rounded shadow-sm"
+                />
+              </div>
+            </div>
+            <p>where:</p>
+            <ul>
+              <li>a ≠ 0 (if a = 0, the equation becomes linear)</li>
+              <li>a, b, and c are real numbers</li>
+              <li>x is the variable</li>
+            </ul>
+
+            <h3 class="mt-4">Solving Methods</h3>
+            <div class="accordion" id="solvingMethods">
+              <div class="accordion-item">
+                <h4 class="accordion-header">
+                  <button
+                    class="accordion-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#quadraticFormula"
+                  >
+                    Quadratic Formula
+                  </button>
+                </h4>
+                <div
+                  id="quadraticFormula"
+                  class="accordion-collapse collapse show"
+                >
+                  <div class="accordion-body">
+                    <p>
+                      The quadratic formula is: x = (-b ± √(b² - 4ac)) / (2a)
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h4 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#factoring"
+                  >
+                    Factoring Method
+                  </button>
+                </h4>
+                <div id="factoring" class="accordion-collapse collapse">
+                  <div class="accordion-body">
+                    <p>
+                      Break down the quadratic expression into factors: (x +
+                      p)(x + q)
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Prerequisites Warning -->
+        <% if (prerequisites.length > 0) { %>
+        <div class="alert alert-warning">
+          <h4 class="alert-heading">Prerequisites</h4>
+          <p>Before starting this topic, make sure you've completed:</p>
+          <ul>
+            <% prerequisites.forEach(function(prereq) { %>
+            <li><a href="/topics/<%= prereq.id %>"><%= prereq.name %></a></li>
+            <% }); %>
+          </ul>
+        </div>
+        <% } %>
+
+        <!-- Exercises Section -->
+        <div class="card">
+          <div class="card-body">
+            <h2>Practice Exercises</h2>
+            <div class="list-group">
+              <a
+                href="/topics/3/exercises/1"
+                class="list-group-item list-group-item-action"
+              >
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">Basic Quadratic Equations</h5>
+                  <small>4 exercises</small>
+                </div>
+                <p class="mb-1">
+                  Practice solving simple quadratic equations using the
+                  quadratic formula
+                </p>
+              </a>
+              <a
+                href="/topics/3/exercises/2"
+                class="list-group-item list-group-item-action"
+              >
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">Factoring Practice</h5>
+                  <small>3 exercises</small>
+                </div>
+                <p class="mb-1">
+                  Solve quadratic equations using factoring method
+                </p>
+              </a>
+              <a
+                href="/topics/3/exercises/3"
+                class="list-group-item list-group-item-action"
+              >
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">Word Problems</h5>
+                  <small>3 exercises</small>
+                </div>
+                <p class="mb-1">
+                  Apply quadratic equations to real-world problems
+                </p>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <a href="/topics" class="btn btn-secondary">Back to Topics</a>
+        </div>
+      </div>
+    </main>
+    <%- include('../../partials/footer') %>
+  </body>
+</html>
