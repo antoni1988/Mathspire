@@ -13,6 +13,7 @@
             <li class="breadcrumb-item active"><%= topic.name %></li>
           </ol>
         </nav>
+
         <h1><%= topic.name %></h1>
 
         <!-- Theory Section -->
@@ -20,20 +21,52 @@
           <div class="card-body">
             <h2>Introduction</h2>
             <div class="row align-items-center">
-              <div class="col-md-8">
-                <%= introduction %>
+              <div class="col-md-<%= introContent.image ? '8' : '12' %>">
+                <%- introContent.text %>
               </div>
-              <% if (image) { %>
+              <% if (introContent.image) { %>
                 <div class="col-md-4">
-                  <img src="<%= image.src %>" 
-                       alt="<%= image.alt %>" 
-                       class="img-fluid rounded shadow-sm">
+                  <img 
+                    src="<%= introContent.image.src %>" 
+                    alt="<%= introContent.image.alt %>" 
+                    class="img-fluid rounded shadow-sm"
+                  />
                 </div>
               <% } %>
             </div>
-            
-            <% if (typeof content !== 'undefined') { %>
-              <%- content %>
+
+            <% if (theorySections && theorySections.length > 0) { %>
+              <% theorySections.forEach(section => { %>
+                <h3 class="mt-4"><%= section.title %></h3>
+                <% if (section.type === 'accordion') { %>
+                  <div class="accordion" id="<%= section.id %>">
+                    <% section.items.forEach(item => { %>
+                      <div class="accordion-item">
+                        <h4 class="accordion-header">
+                          <button 
+                            class="accordion-button <%= item.expanded ? '' : 'collapsed' %>" 
+                            type="button" 
+                            data-bs-toggle="collapse" 
+                            data-bs-target="#<%= item.id %>"
+                          >
+                            <%= item.title %>
+                          </button>
+                        </h4>
+                        <div 
+                          id="<%= item.id %>" 
+                          class="accordion-collapse collapse <%= item.expanded ? 'show' : '' %>"
+                        >
+                          <div class="accordion-body">
+                            <%- item.content %>
+                          </div>
+                        </div>
+                      </div>
+                    <% }); %>
+                  </div>
+                <% } else { %>
+                  <%- section.content %>
+                <% } %>
+              <% }); %>
             <% } %>
           </div>
         </div>
@@ -58,17 +91,19 @@
             <div class="list-group">
               <% exerciseGroups.forEach(group => { %>
                 <a href="/topics/<%= topic.id %>/exercises/<%= group.first_page %>" 
-                   class="list-group-item list-group-item-action">
+                  class="list-group-item list-group-item-action">
                   <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1"><%= group.exercise_type.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) %></h5>
-                    <small><%= group.completed_count || 0 %>/<%= group.exercise_count %> completed</small>
+                    <small>
+                      <%= group.completed_count || 0 %>/<%= group.exercise_count %> completed
+                    </small>  
                   </div>
                   <div class="progress" style="height: 5px;">
                     <div class="progress-bar" role="progressbar" 
-                         style="width: <%= Math.round((group.completed_count || 0) * 100 / group.exercise_count) %>%" 
-                         aria-valuenow="<%= group.completed_count || 0 %>" 
-                         aria-valuemin="0" 
-                         aria-valuemax="<%= group.exercise_count %>">
+                        style="width: <%= Math.round((group.completed_count || 0) * 100 / group.exercise_count) %>%" 
+                        aria-valuenow="<%= group.completed_count || 0 %>" 
+                        aria-valuemin="0" 
+                        aria-valuemax="<%= group.exercise_count %>">
                     </div>
                   </div>
                   <p class="mb-1 mt-2">Practice <%= group.exercise_type.replace(/_/g, ' ') %></p>

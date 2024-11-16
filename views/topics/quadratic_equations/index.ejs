@@ -1,144 +1,52 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <%- include('../../partials/header') %>
-    <title>Quadratic Equations</title>
-  </head>
-  <body>
-    <main>
-      <div class="container mt-5">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/topics">Topics</a></li>
-            <li class="breadcrumb-item active">Quadratic Equations</li>
-          </ol>
-        </nav>
+<%
+const introContent = {
+  text: `
+    <p>
+      A quadratic equation is a polynomial equation of degree 2, which can be written in the standard form:
+    </p>
+    <div class="text-center my-3">
+      <strong>ax² + bx + c = 0</strong>
+    </div>
+    <p>where:</p>
+    <ul>
+      <li>a ≠ 0 (if a = 0, the equation becomes linear)</li>
+      <li>a, b, and c are real numbers</li>
+      <li>x is the variable</li>
+    </ul>
+  `,
+  image: {
+    src: "/images/topics/quadratic_equation/exampleFunction.png",
+    alt: "Quadratic Equation Graph"
+  }
+};
 
-        <h1>Quadratic Equations</h1>
+const theorySections = [
+  {
+    title: "Solving Methods",
+    type: "accordion",
+    id: "solvingMethods",
+    items: [
+      {
+        id: "quadraticFormula",
+        title: "Quadratic Formula",
+        content: "<p>The quadratic formula is: x = (-b ± √(b² - 4ac)) / (2a)</p>",
+        expanded: true
+      },
+      {
+        id: "factoring",
+        title: "Factoring Method",
+        content: "<p>Break down the quadratic expression into factors: (x + p)(x + q)</p>",
+        expanded: false
+      }
+    ]
+  }
+];
+%>
 
-        <!-- Theory Section -->
-        <div class="card mb-4">
-          <div class="card-body">
-            <h2>Introduction</h2>
-            <div class="row align-items-center">
-              <div class="col-md-8">
-                <p>
-                  A quadratic equation is a polynomial equation of degree 2,
-                  which can be written in the standard form:
-                </p>
-                <div class="text-center my-3">
-                  <strong>ax² + bx + c = 0</strong>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <img
-                  src="/images/topics/quadratic_equation/exampleFunction.png"
-                  alt="Quadratic Equation Graph"
-                  class="img-fluid rounded shadow-sm"
-                />
-              </div>
-            </div>
-            <p>where:</p>
-            <ul>
-              <li>a ≠ 0 (if a = 0, the equation becomes linear)</li>
-              <li>a, b, and c are real numbers</li>
-              <li>x is the variable</li>
-            </ul>
-
-            <h3 class="mt-4">Solving Methods</h3>
-            <div class="accordion" id="solvingMethods">
-              <div class="accordion-item">
-                <h4 class="accordion-header">
-                  <button
-                    class="accordion-button"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#quadraticFormula"
-                  >
-                    Quadratic Formula
-                  </button>
-                </h4>
-                <div
-                  id="quadraticFormula"
-                  class="accordion-collapse collapse show"
-                >
-                  <div class="accordion-body">
-                    <p>
-                      The quadratic formula is: x = (-b ± √(b² - 4ac)) / (2a)
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div class="accordion-item">
-                <h4 class="accordion-header">
-                  <button
-                    class="accordion-button collapsed"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#factoring"
-                  >
-                    Factoring Method
-                  </button>
-                </h4>
-                <div id="factoring" class="accordion-collapse collapse">
-                  <div class="accordion-body">
-                    <p>
-                      Break down the quadratic expression into factors: (x +
-                      p)(x + q)
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Prerequisites Warning -->
-        <% if (prerequisites.length > 0) { %>
-        <div class="alert alert-warning">
-          <h4 class="alert-heading">Prerequisites</h4>
-          <p>Before starting this topic, make sure you've completed:</p>
-          <ul>
-            <% prerequisites.forEach(function(prereq) { %>
-            <li><a href="/topics/<%= prereq.id %>"><%= prereq.name %></a></li>
-            <% }); %>
-          </ul>
-        </div>
-        <% } %>
-        <!-- Exercises Section -->
-        <div class="card">
-          <div class="card-body">
-            <h2>Practice Exercises</h2>
-            <div class="list-group">
-              <% exerciseGroups.forEach(group => { %>
-                <a href="/topics/<%= topic.id %>/exercises/<%= group.first_page %>" 
-                  class="list-group-item list-group-item-action">
-                  <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1"><%= group.exercise_type.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) %></h5>
-                    <small>
-                      <%= group.completed_count || 0 %>/<%= group.exercise_count %> completed
-                    </small>  
-                  </div>
-                  <div class="progress" style="height: 5px;">
-                    <div class="progress-bar" role="progressbar" 
-                        style="width: <%= Math.round((group.completed_count || 0) * 100 / group.exercise_count) %>%" 
-                        aria-valuenow="<%= group.completed_count || 0 %>" 
-                        aria-valuemin="0" 
-                        aria-valuemax="<%= group.exercise_count %>">
-                    </div>
-                  </div>
-                  <p class="mb-1 mt-2">Practice <%= group.exercise_type.replace(/_/g, ' ') %></p>
-                </a>
-              <% }); %>
-            </div>
-          </div>
-        </div>
-
-        <div class="mt-4">
-          <a href="/topics" class="btn btn-secondary">Back to Topics</a>
-        </div>
-      </div>
-    </main>
-    <%- include('../../partials/footer') %>
-  </body>
-</html>
+<%- include('../../components/topic_template', {
+  topic,
+  prerequisites,
+  exerciseGroups,
+  introContent,
+  theorySections
+}) %>

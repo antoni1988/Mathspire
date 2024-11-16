@@ -1,54 +1,74 @@
 <%
-const introduction = `
-  <p>
-    A power (or exponent) shows how many times a number is multiplied by itself.
-  </p>
-  <div class="text-center my-3">
-    <strong>x<sup>n</sup> = x × x × ... × x</strong> (n times)
-  </div>
-`;
-
-const image = {
-  src: "/images/topics/powers/example.png",
-  alt: "Powers Example"
+const introContent = {
+  text: `
+    <p>A power (or exponent) shows how many times a number is multiplied by itself.</p>
+    <div class="text-center my-3">
+      <strong>x<sup>n</sup> = x × x × ... × x</strong> (n times)
+    </div>
+    <p>Understanding powers and exponents is crucial for:</p>
+    <ul>
+      <li>Simplifying large calculations</li>
+      <li>Working with scientific notation</li>
+      <li>Solving exponential growth problems</li>
+    </ul>
+  `,
+  image: {
+    src: "/images/topics/powers/example.png",
+    alt: "Powers Example"
+  }
 };
 
-const content = `
-  <h3 class="mt-4">Basic Rules</h3>
-  <div class="accordion" id="powerRules">
-    <div class="accordion-item">
-      <h4 class="accordion-header">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#productRule">
-          Product Rule
-        </button>
-      </h4>
-      <div id="productRule" class="accordion-collapse collapse show">
-        <div class="accordion-body">
-          <p>x<sup>m</sup> × x<sup>n</sup> = x<sup>m+n</sup></p>
-        </div>
-      </div>
-    </div>
-    <div class="accordion-item">
-      <h4 class="accordion-header">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#quotientRule">
-          Quotient Rule
-        </button>
-      </h4>
-      <div id="quotientRule" class="accordion-collapse collapse">
-        <div class="accordion-body">
-          <p>x<sup>m</sup> ÷ x<sup>n</sup> = x<sup>m-n</sup></p>
-        </div>
-      </div>
-    </div>
-  </div>
-`;
+const theorySections = [
+  {
+    title: "Basic Rules",
+    type: "accordion",
+    id: "powerRules",
+    items: [
+      {
+        id: "productRule",
+        title: "Product Rule",
+        content: `
+          <p>When multiplying powers with the same base, add the exponents:</p>
+          <div class="text-center my-3">
+            <strong>x<sup>m</sup> × x<sup>n</sup> = x<sup>m+n</sup></strong>
+          </div>
+          <p>Example: 2³ × 2² = 2⁵ = 32</p>
+        `,
+        expanded: true
+      },
+      {
+        id: "quotientRule",
+        title: "Quotient Rule",
+        content: `
+          <p>When dividing powers with the same base, subtract the exponents:</p>
+          <div class="text-center my-3">
+            <strong>x<sup>m</sup> ÷ x<sup>n</sup> = x<sup>m-n</sup></strong>
+          </div>
+          <p>Example: 2⁵ ÷ 2² = 2³ = 8</p>
+        `,
+        expanded: false
+      },
+      {
+        id: "powerRule",
+        title: "Power Rule",
+        content: `
+          <p>When raising a power to another power, multiply the exponents:</p>
+          <div class="text-center my-3">
+            <strong>(x<sup>m</sup>)<sup>n</sup> = x<sup>m×n</sup></strong>
+          </div>
+          <p>Example: (2³)² = 2⁶ = 64</p>
+        `,
+        expanded: false
+      }
+    ]
+  }
+];
 %>
 
-<%- include('../../components/topic_page', {
+<%- include('../../components/topic_template', {
   topic,
   prerequisites,
   exerciseGroups,
-  introduction,
-  image,
-  content
+  introContent,
+  theorySections
 }) %>

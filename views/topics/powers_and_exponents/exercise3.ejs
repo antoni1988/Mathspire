@@ -1,125 +1,73 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <%- include('../../partials/header') %>
-    <title>Word Problems - Quadratic Equations</title>
-  </head>
-  <body>
-    <main>
-      <div class="container mt-5">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/topics">Topics</a></li>
-            <li class="breadcrumb-item"><a href="/topics/3">Quadratic Equations</a></li>
-            <li class="breadcrumb-item active">Word Problems</li>
-          </ol>
-        </nav>
-        <h1>Word Problems Practice</h1>
-        <div class="card mb-4">
-          <div class="card-body">
-            <div class="exercises">
-              <% 
-                // Debug logging
-                console.log('dbExercises:', typeof dbExercises !== 'undefined' ? dbExercises : 'undefined');
-                  
-                const exercises = [
-                  {
-                    exercise_number: 1,
-                    type: 'multiple_choice',
-                    question: 'A ball is thrown upward with an initial velocity of 20 m/s. The height h (in meters) after t seconds is given by h = -4.9t² + 20t. What is the maximum height reached by the ball?',
-                    options: [
-                      '10 meters',
-                      '20.4 meters',
-                      '40.8 meters',
-                      '50 meters'
-                    ],
-                    answer: 1,
-                    completed_at: null,
-                    steps: [
-                      "To find maximum height, find when velocity (derivative) is zero",
-                      "h′ = -9.8t + 20 (derivative of height function)",
-                      "Set h′ = 0: -9.8t + 20 = 0",
-                      "Solve for t: t = 20/9.8 ≈ 2.04 seconds",
-                      "Plug this t back into original equation to find max height",
-                      "h = -4.9(2.04)² + 20(2.04) ≈ 20.4 meters"
-                    ]
-                  },
-                  {
-                    exercise_number: 2,
-                    type: 'open_question',
-                    question: 'A rectangle has a perimeter of 24 units and its area is 35 square units. Find the length of the rectangle.',
-                    inputLabel: 'Enter the length (larger dimension) of the rectangle:',
-                    placeholder: 'e.g. 7',
-                    answer: '7',
-                    showAnswerButton: true,
-                    completed_at: null,
-                    steps: [
-                      "Let length = L and width = W",
-                      "Perimeter equation: 2L + 2W = 24",
-                      "Simplify to: L + W = 12",
-                      "Area equation: L × W = 35",
-                      "Substitute W = 12 - L into area equation",
-                      "L(12 - L) = 35",
-                      "L² - 12L + 35 = 0",
-                      "Solve quadratic equation to get L = 7 or L = 5",
-                      "Since length is larger dimension, L = 7"
-                    ]
-                  },
-                  {
-                    exercise_number: 3,
-                    type: 'multiple_choice',
-                    question: 'A farmer wants to fence a rectangular field. He has 100 meters of fencing material and wants to maximize the area. What should be the length of the field?',
-                    options: [
-                      '20 meters',
-                      '25 meters',
-                      '30 meters',
-                      '35 meters'
-                    ],
-                    answer: 1,
-                    completed_at: null,
-                    steps: [
-                      "Let length = L and width = W",
-                      "Perimeter equation: 2L + 2W = 100",
-                      "Solve for W: W = 50 - L",
-                      "Area = L × W = L(50 - L)",
-                      "Area = 50L - L²",
-                      "Maximum occurs at vertex of parabola",
-                      "Derivative of area = 50 - 2L",
-                      "Set equal to zero: 50 - 2L = 0",
-                      "Solve: L = 25 meters"
-                    ]
-                  }
-                ];
+<%
+const pageTitle = "Word Problems";
+const topicName = "Powers and Exponents";
+const topicId = 2;
+const exercises = [
+  {
+    exercise_number: 1,
+    type: 'multiple_choice',
+    question: 'A bacteria population doubles every hour. If you start with 100 bacteria, how many will there be after 3 hours?',
+    options: ['300', '600', '800', '800'],
+    answer: 3,
+    completed_at: null,
+    steps: [
+      "After 1 hour: 100 × 2¹ = 200 bacteria",
+      "After 2 hours: 100 × 2² = 400 bacteria",
+      "After 3 hours: 100 × 2³ = 800 bacteria"
+    ]
+  },
+  {
+    exercise_number: 2,
+    type: 'open_question',
+    question: 'A cube has a volume of 64 cubic units. What is the length of each edge?',
+    inputLabel: 'Enter your answer:',
+    placeholder: 'e.g. 4',
+    answer: '4',
+    showAnswerButton: true,
+    completed_at: null,
+    steps: [
+      "Volume of a cube is edge length cubed",
+      "If V = x³ and V = 64, then x³ = 64",
+      "Therefore x = ∛64 = 4"
+    ]
+  },
+  {
+    exercise_number: 3,
+    type: 'true_false',
+    statements: [
+      {
+        text: 'If you triple a number 2 times, you multiply it by 9',
+        answer: true
+      },
+      {
+        text: 'If you double a number 3 times, you multiply it by 6',
+        answer: false
+      }
+    ],
+    completed_at: null,
+    steps: [
+      "Tripling twice: 3² = 9, so tripling twice multiplies by 9",
+      "Doubling three times: 2³ = 8, not 6, so doubling three times multiplies by 8"
+    ]
+  }
+];
 
-                // Update completed_at from database results
-                if (typeof dbExercises !== 'undefined') {
-                  exercises.forEach(ex => {
-                    const dbExercise = dbExercises.find(e => e.exercise_number === ex.exercise_number);
-                    if (dbExercise) {
-                      ex.id = dbExercise.id;
-                      ex.completed_at = dbExercise.completed_at;
-                    }
-                  });
-                }
-              %>
+if (typeof dbExercises !== 'undefined') {
+  exercises.forEach(ex => {
+    const dbExercise = dbExercises.find(e => e.exercise_number === ex.exercise_number);
+    if (dbExercise) {
+      ex.id = dbExercise.id;
+      ex.completed_at = dbExercise.completed_at;
+    }
+  });
+}
+%>
 
-              <% exercises.forEach(function(exercise) { %>
-                <%- include(`../../components/exercises/${exercise.type}`, { exercise }) %>
-              <% }); %>
-            </div>
-          </div>
-        </div>
-        <%- include('../../components/exercise_navigation', { 
-          topicId,
-          currentPage,
-          totalPages 
-        }) %>
-      </div>
-    </main>
-    <script src="/js/exercise_validation.js"></script>
-    <script>
-      const exercises = <%- JSON.stringify(exercises) %>;
-    </script>
-    <%- include('../../partials/footer') %>
-  </body>
-</html>
+<%- include('../../components/exercise_page', { 
+  pageTitle,
+  topicName,
+  topicId,
+  exercises,
+  currentPage,
+  totalPages
+}) %>
