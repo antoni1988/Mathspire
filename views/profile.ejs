@@ -7,9 +7,53 @@
 <body>
     <div class="container mt-5">
         <h1>My Profile</h1>
-        <div class="card">
+        
+        <% if (req.query.reset === 'success') { %>
+            <div class="alert alert-success">
+                Your progress has been reset successfully.
+            </div>
+        <% } else if (req.query.reset === 'error') { %>
+            <div class="alert alert-danger">
+                An error occurred while resetting your progress.
+            </div>
+        <% } %>
+
+        <div class="card mb-4">
             <div class="card-body">
                 <h5 class="card-title">Username: <%= user.username %></h5>
+                
+                <!-- Reset Progress Button with Confirmation -->
+                <div class="mt-4">
+                    <button 
+                        class="btn btn-danger" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#resetConfirmModal"
+                    >
+                        Reset All Progress
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirmation Modal -->
+        <div class="modal fade" id="resetConfirmModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirm Reset</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-danger">Warning: This action cannot be undone!</p>
+                        <p>Are you sure you want to reset all your exercise progress?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <form action="/reset-progress" method="POST" style="display: inline;">
+                            <button type="submit" class="btn btn-danger">Reset Progress</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

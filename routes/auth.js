@@ -3,24 +3,16 @@ const router = express.Router();
 const User = require("../models/user");
 const db = require("../db");
 
-
-
-
-function requireGuest(req, res, next) {
-  if (req.session.userId) {
-    return res.redirect("/dashboard");
-  }
-  next();
-}
+const { requireGuest } = require("../middleware/auth");
 
 router.get("/",requireGuest, (req, res) => {
   res.render("home", { req });
 });
 
-
-router.get("/register",requireGuest, (req, res) => {
+router.get("/register", requireGuest, (req, res) => {
   res.render("register", { req });
 });
+
 
 
 router.post("/register", (req, res) => {
@@ -43,7 +35,7 @@ router.post("/register", (req, res) => {
   });
 });
 
-router.get("/login", (req, res) => {
+router.get("/login", requireGuest, (req, res) => {
   res.render("login", { req });
 });
 
@@ -66,6 +58,22 @@ router.post("/login", (req, res) => {
       });
     }
   });
+});
+
+
+router.post("/reset-progress", (req, res) => {
+  if (!req.session.userId) {
+    return res.redirect("/login");
+  }
+
+  User.resetProgress(req.session.userId)
+    .then(() => {
+      res.redirect("/profile?reset=success");
+    })
+    .catch((err) => {
+      console.error("Error resetting progress:", err);
+      res.redirect("/profile?reset=error");
+    });
 });
 
 router.get("/dashboard", (req, res) => {

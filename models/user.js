@@ -24,6 +24,13 @@ class User {
     );
   }
 
+  static async resetProgress(userId) {
+    const [result] = await db
+      .promise()
+      .query("DELETE FROM progress WHERE user_id = ?", [userId]);
+    return result;
+  }
+
   static authenticate(username, password, callback) {
     this.findByUsername(username, (err, user) => {
       if (err) return callback(err);

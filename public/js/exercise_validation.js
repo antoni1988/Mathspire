@@ -74,9 +74,14 @@ function saveProgress(exerciseId) {
   fetch(`/topics/${topicId}/exercises/${exerciseId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
+    credentials: "same-origin", // Important for session cookies
     body: JSON.stringify({ exerciseId }),
   })
     .then((response) => {
+      if (response.status === 401) {
+        window.location.href = "/login"; // Redirect to login if unauthorized
+        throw new Error("Unauthorized");
+      }
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -98,7 +103,9 @@ function saveProgress(exerciseId) {
     })
     .catch((error) => {
       console.error("Error:", error);
-      showError(exerciseId, "Error saving progress. Please try again.");
+      if (error.message !== "Unauthorized") {
+        showError(exerciseId, "Error saving progress. Please try again.");
+      }
     });
 }
 
