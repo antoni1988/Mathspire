@@ -1,31 +1,11 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <%- include('../../partials/header') %>
-    <title>Mixed Practice - Quadratic Equations</title>
-  </head>
-  <body>
-    <main>
-      <div class="container mt-5">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/topics">Topics</a></li>
-            <li class="breadcrumb-item"><a href="/topics/3">Quadratic Equations</a></li>
-            <li class="breadcrumb-item active">Mixed Practice</li>
-          </ol>
-        </nav>
+<%
+const pageTitle = "Mixed Practice";
+const topicName = "Quadratic Equations";
+const topicId = 3;
 
-        <h1>Mixed Practice Exercises</h1>
-        <div class="card mb-4">
-          <div class="card-body">
-            <div class="exercises">
-              <% 
-                // Debug logging
-                console.log('dbExercises:', typeof dbExercises !== 'undefined' ? dbExercises : 'undefined');
-                  
-                const exercises = [
+const exercises = [
                   {
-                    exercise_number: 1, // Changed from id: 5
+                    exercise_number: 1,
                     type: 'multiple_choice',
                     question: 'What is the factored form of x² - 4x + 4?',
                     options: [
@@ -38,7 +18,7 @@
                     completed_at: null
                   },
                   {
-                    exercise_number: 2, // Changed from id: 6
+                    exercise_number: 2,
                     type: 'true_false',
                     statements: [
                       {
@@ -53,7 +33,7 @@
                     completed_at: null
                   },
                   {
-                    exercise_number: 3, // Changed from id: 7
+                    exercise_number: 3,
                     type: 'open_question',
                     question: 'Factor the expression: x² - 2x - 8',
                     inputLabel: 'Enter your answer in the form (x±a)(x±b):',
@@ -64,40 +44,21 @@
                   }
                 ];
 
-                // Update completed_at from database results
-                if (typeof dbExercises !== 'undefined') {
-                  exercises.forEach(ex => {
-                    const dbExercise = dbExercises.find(e => e.exercise_number === ex.exercise_number);
-                    if (dbExercise) {
-                      ex.id = dbExercise.id;  // Keep database ID for form submission
-                      ex.completed_at = dbExercise.completed_at;
-                    }
-                  });
-                }
-
-                // Debug logging
-                console.log('Updated exercises:', exercises);
-
-
-              %>
-
-              <% exercises.forEach(function(exercise) { %>
-                <%- include(`../../components/exercises/${exercise.type}`, { exercise }) %>
-              <% }); %>
-            </div>
-          </div>
-        </div>
-        <%- include('../../components/exercise_navigation', { 
-          topicId,
-          currentPage,
-          totalPages 
-        }) %>
-      </div>
-    </main>
-    <script src="/js/exercise_validation.js"></script>
-    <script>
-      const exercises = <%- JSON.stringify(exercises) %>;
-    </script>
-    <%- include('../../partials/footer') %>
-  </body>
-</html>
+if (typeof dbExercises !== 'undefined') {
+  exercises.forEach(ex => {
+    const dbExercise = dbExercises.find(e => e.exercise_number === ex.exercise_number);
+    if (dbExercise) {
+      ex.id = dbExercise.id;
+      ex.completed_at = dbExercise.completed_at;
+    }
+  });
+}
+%>
+<%- include('../../components/exercise_page', { 
+  pageTitle,
+  topicName,
+  topicId,
+  exercises,
+  currentPage,
+  totalPages
+}) %>
