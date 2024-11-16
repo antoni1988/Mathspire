@@ -1,117 +1,54 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <%- include('../../partials/header') %>
-    <title>Powers and Exponents</title>
-  </head>
-  <body>
-    <main>
-      <div class="container mt-5">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/topics">Topics</a></li>
-            <li class="breadcrumb-item active">Powers and Exponents</li>
-          </ol>
-        </nav>
-        <h1>Powers and Exponents</h1>
-        <!-- Theory Section -->
-        <div class="card mb-4">
-          <div class="card-body">
-            <h2>Introduction</h2>
-            <div class="row align-items-center">
-              <div class="col-md-8">
-                <p>
-                  A power (or exponent) shows how many times a number is multiplied by itself.
-                </p>
-                <div class="text-center my-3">
-                  <strong>x<sup>n</sup> = x × x × ... × x</strong> (n times)
-                </div>
-              </div>
-              <div class="col-md-4">
-                <img
-                  src="/images/topics/powers/example.png"
-                  alt="Powers Example"
-                  class="img-fluid rounded shadow-sm"
-                />
-              </div>
-            </div>
+<%
+const introduction = `
+  <p>
+    A power (or exponent) shows how many times a number is multiplied by itself.
+  </p>
+  <div class="text-center my-3">
+    <strong>x<sup>n</sup> = x × x × ... × x</strong> (n times)
+  </div>
+`;
 
-            <h3 class="mt-4">Basic Rules</h3>
-            <div class="accordion" id="powerRules">
-              <div class="accordion-item">
-                <h4 class="accordion-header">
-                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#productRule">
-                    Product Rule
-                  </button>
-                </h4>
-                <div id="productRule" class="accordion-collapse collapse show">
-                  <div class="accordion-body">
-                    <p>x<sup>m</sup> × x<sup>n</sup> = x<sup>m+n</sup></p>
-                  </div>
-                </div>
-              </div>
-              <div class="accordion-item">
-                <h4 class="accordion-header">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#quotientRule">
-                    Quotient Rule
-                  </button>
-                </h4>
-                <div id="quotientRule" class="accordion-collapse collapse">
-                  <div class="accordion-body">
-                    <p>x<sup>m</sup> ÷ x<sup>n</sup> = x<sup>m-n</sup></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+const image = {
+  src: "/images/topics/powers/example.png",
+  alt: "Powers Example"
+};
 
-        <!-- Prerequisites Warning -->
-        <% if (prerequisites.length > 0) { %>
-        <div class="alert alert-warning">
-          <h4 class="alert-heading">Prerequisites</h4>
-          <p>Before starting this topic, make sure you've completed:</p>
-          <ul>
-            <% prerequisites.forEach(function(prereq) { %>
-            <li><a href="/topics/<%= prereq.id %>"><%= prereq.name %></a></li>
-            <% }); %>
-          </ul>
-        </div>
-        <% } %>
-
-        <!-- Exercises Section -->
-        <div class="card">
-          <div class="card-body">
-            <h2>Practice Exercises</h2>
-            <div class="list-group">
-              <a href="/topics/2/exercises/1" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                  <h5 class="mb-1">Basic Powers</h5>
-                  <small>4 exercises</small>
-                </div>
-                <p class="mb-1">Practice basic power operations and rules</p>
-              </a>
-              <a href="/topics/2/exercises/2" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                  <h5 class="mb-1">Advanced Operations</h5>
-                  <small>3 exercises</small>
-                </div>
-                <p class="mb-1">Work with more complex power expressions</p>
-              </a>
-              <a href="/topics/2/exercises/3" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                  <h5 class="mb-1">Mixed Practice</h5>
-                  <small>3 exercises</small>
-                </div>
-                <p class="mb-1">Combine basic and advanced power operations</p>
-            </div>
-          </div>
-        </div>
-        <div class="mt-4">
-          <a href="/topics" class="btn btn-secondary">Back to Topics</a>
+const content = `
+  <h3 class="mt-4">Basic Rules</h3>
+  <div class="accordion" id="powerRules">
+    <div class="accordion-item">
+      <h4 class="accordion-header">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#productRule">
+          Product Rule
+        </button>
+      </h4>
+      <div id="productRule" class="accordion-collapse collapse show">
+        <div class="accordion-body">
+          <p>x<sup>m</sup> × x<sup>n</sup> = x<sup>m+n</sup></p>
         </div>
       </div>
-    </main>
-    <%- include('../../partials/footer') %>
-  </body>
-</html>
+    </div>
+    <div class="accordion-item">
+      <h4 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#quotientRule">
+          Quotient Rule
+        </button>
+      </h4>
+      <div id="quotientRule" class="accordion-collapse collapse">
+        <div class="accordion-body">
+          <p>x<sup>m</sup> ÷ x<sup>n</sup> = x<sup>m-n</sup></p>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+%>
+
+<%- include('../../components/topic_page', {
+  topic,
+  prerequisites,
+  exerciseGroups,
+  introduction,
+  image,
+  content
+}) %>
