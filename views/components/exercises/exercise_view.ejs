@@ -1,6 +1,5 @@
 <%
-const { pageTitle, topicName, exercises } = Exercise.getPageExercises(3, 'basic');
-const topicId = 3;
+const { pageTitle, topicName, exercises } = Exercise.getPageExercises(topicId, exerciseType);
 
 if (typeof dbExercises !== 'undefined') {
   exercises.forEach(ex => {
@@ -12,7 +11,7 @@ if (typeof dbExercises !== 'undefined') {
   });
 }
 %>
-<%- include('../../components/exercise_page', { 
+<%- include('components/exercise_page', { 
   pageTitle,
   topicName,
   topicId,

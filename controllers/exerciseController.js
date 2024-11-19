@@ -1,12 +1,12 @@
 const Exercise = require("../models/exercise");
 const Topic = require("../models/topic");
+
 class ExerciseController {
   static async show(req, res) {
     try {
       const { id: topicId, exerciseId: pageNumber } = req.params;
       const userId = req.session.userId;
 
-      // Get topic info first
       const topic = await Topic.findById(topicId);
       if (!topic) {
         return res.status(404).send("Topic not found");
@@ -18,18 +18,16 @@ class ExerciseController {
         pageNumber,
         userId
       );
+      const exerciseType = Exercise.getExerciseTypeByPage(pageNumber);
 
-      // Use topic name to determine template path
-      const templatePath = `topics/${topic.name
-        .toLowerCase()
-        .replace(/\s+/g, "_")}/exercise${pageNumber}`;
-
-      res.render(templatePath, {
+      res.render("exercise_view", {
+        Exercise,
         dbExercises: exercises,
-        req,
         topicId,
+        exerciseType,
         currentPage: parseInt(pageNumber),
         totalPages,
+        req,
       });
     } catch (err) {
       console.error("Error:", err);

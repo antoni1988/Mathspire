@@ -1,5 +1,6 @@
 // models/exercise.js
 const db = require("../db");
+const exercises = require("../data/exercises.json");
 
 class Exercise {
   constructor(data) {
@@ -9,6 +10,23 @@ class Exercise {
     this.exercise_type = data.exercise_type;
     this.page_number = data.page_number;
     this.completed_at = data.completed_at;
+  }
+
+  static getPageExercises(topicId, pageName) {
+    const topic = Object.values(exercises).find((t) => t.id === topicId);
+    if (!topic || !topic.pages[pageName]) return null;
+    return {
+      pageTitle: topic.pages[pageName].title,
+      topicName: topic.name,
+      exercises: topic.pages[pageName].exercises,
+    };
+  }
+
+  static getRandomExercise(topicId, pageName) {
+    const page = this.getPageExercises(topicId, pageName);
+    if (!page) return null;
+    const exercises = page.exercises;
+    return exercises[Math.floor(Math.random() * exercises.length)];
   }
 
   static async findByTopicAndPage(topicId, pageNumber, userId) {
