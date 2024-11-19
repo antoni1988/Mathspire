@@ -6,19 +6,17 @@
   <% } %>
   <h4>Exercise <%= exercise.exercise_number %> - Multiple Choice</h4>
   <p><%= exercise.question %></p>
-  <form id="form-<%= exercise.id %>" onsubmit="validateAnswer(event, <%= exercise.id %>, 'multiple_choice')" class="mt-3">
-    <% exercise.options.forEach((option, index) => { %>
-      <div class="form-check">
-        <input 
-          class="form-check-input" 
-          type="radio" 
-          name="answer-<%= exercise.id %>" 
-          value="<%= index %>" 
-          required
-        />
-        <label class="form-check-label"><%= option %></label>
-      </div>
-    <% }); %>
+  
+  <% if (exercise.image) { %>
+    <div class="text-center mb-3">
+      <img 
+        src="<%= exercise.image.src %>" 
+        alt="<%= exercise.image.alt %>"
+        class="img-fluid rounded shadow-sm"
+        style="max-width: 100%;"
+      >
+    </div>
+  <% } %>
     <div id="feedback-<%= exercise.id %>"></div>
     <div class="btn-group mt-2">
       <button type="submit" class="btn btn-primary">Submit</button>

@@ -8,9 +8,13 @@ const exercises = [
                     exercise_number: 1,
                     type: 'multiple_choice',
                     question: 'Solve the equation: x² + 2x + 1 = 0',
+                    image: {
+                      src: '/images/dark_Logo.png',
+                      alt: 'Graph of x² + 2x + 1 showing vertex at (-1,0)'
+                    },
                     options: [
                       'x = -1',
-                      'x = 1',
+                      'x = 1', 
                       'x = -1 (twice)',
                       'x = 1 (twice)'
                     ],
@@ -19,7 +23,7 @@ const exercises = [
                     steps: [
                       "First, recognize this is a perfect square trinomial: x² + 2x + 1 = (x + 1)²",
                       "Set (x + 1)² = 0",
-                      "Therefore x + 1 = 0",
+                      "Therefore x + 1 = 0", 
                       "Solve for x: x = -1",
                       "Since this is a perfect square, the solution -1 occurs twice"
                     ]
