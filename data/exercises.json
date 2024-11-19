@@ -1,4 +1,169 @@
-{
+{"powers_and_exponents": {
+    "id": 2,
+    "name": "Powers and Exponents",
+    "pages": {
+      "basic": {
+        "title": "Basic Practice",
+        "exercises": [
+          {
+            "exercise_number": 1,
+            "type": "multiple_choice",
+            "question": "What is 2³?",
+            "options": ["4", "6", "8", "16"],
+            "answer": 2,
+            "completed_at": null,
+            "steps": [
+              "Write out 2³ as repeated multiplication",
+              "2³ = 2 × 2 × 2",
+              "First multiply 2 × 2 = 4",
+              "Then multiply 4 × 2 = 8"
+            ]
+          },
+          {
+            "exercise_number": 2,
+            "type": "true_false",
+            "statements": [
+              {
+                "text": "2⁴ = 16",
+                "answer": true
+              },
+              {
+                "text": "3² = 6",
+                "answer": false
+              }
+            ],
+            "completed_at": null,
+            "steps": [
+              "For 2⁴: Multiply 2 × 2 × 2 × 2 = 16",
+              "For 3²: Multiply 3 × 3 = 9, not 6"
+            ]
+          },
+          {
+            "exercise_number": 3,
+            "type": "open_question",
+            "question": "Simplify: 2³ × 2²",
+            "inputLabel": "Enter your answer as a single power of 2:",
+            "placeholder": "e.g. 2⁵",
+            "answer": "2⁵",
+            "showAnswerButton": true,
+            "completed_at": null,
+            "steps": [
+              "Write out each power as repeated multiplication",
+              "2³ = 2 × 2 × 2",
+              "2² = 2 × 2",
+              "Combine: 2³ × 2² = (2 × 2 × 2) × (2 × 2)",
+              "Count total number of 2's: 5",
+              "Therefore, 2³ × 2² = 2⁵"
+            ]
+          }
+        ]
+      },
+      "mixed": {
+        "title": "Laws Practice",
+        "exercises": [
+          {
+            "exercise_number": 1,
+            "type": "open_question",
+            "question": "Simplify: (2³)²",
+            "inputLabel": "Enter your answer as a single power of 2:",
+            "placeholder": "e.g. 2⁶",
+            "answer": "2⁶",
+            "showAnswerButton": true,
+            "completed_at": null,
+            "steps": [
+              "Use the power rule: (x^m)^n = x^(m×n)",
+              "Here, m = 3 and n = 2",
+              "So (2³)² = 2^(3×2) = 2⁶"
+            ]
+          },
+          {
+            "exercise_number": 2,
+            "type": "multiple_choice",
+            "question": "Simplify: 2⁴ ÷ 2²",
+            "options": ["2²", "2⁶", "2⁸", "4"],
+            "answer": 0,
+            "completed_at": null,
+            "steps": [
+              "Use the quotient rule: x^m ÷ x^n = x^(m-n)",
+              "Here, m = 4 and n = 2",
+              "So 2⁴ ÷ 2² = 2^(4-2) = 2²"
+            ]
+          },
+          {
+            "exercise_number": 3,
+            "type": "true_false",
+            "statements": [
+              {
+                "text": "(x²)³ = x⁶",
+                "answer": true
+              },
+              {
+                "text": "x⁴ ÷ x² = x",
+                "answer": false
+              }
+            ],
+            "completed_at": null,
+            "steps": [
+              "For (x²)³: Use power rule (x^m)^n = x^(m×n), so (x²)³ = x^(2×3) = x⁶",
+              "For x⁴ ÷ x²: Use quotient rule x^m ÷ x^n = x^(m-n), so x⁴ ÷ x² = x^(4-2) = x²"
+            ]
+          }
+        ]
+      },
+      "word_problems": {
+        "title": "Word Problems",
+        "exercises": [
+          {
+            "exercise_number": 1,
+            "type": "multiple_choice",
+            "question": "A bacteria population doubles every hour. If you start with 100 bacteria, how many will there be after 3 hours?",
+            "options": ["300", "600", "800", "800"],
+            "answer": 3,
+            "completed_at": null,
+            "steps": [
+              "After 1 hour: 100 × 2¹ = 200 bacteria",
+              "After 2 hours: 100 × 2² = 400 bacteria",
+              "After 3 hours: 100 × 2³ = 800 bacteria"
+            ]
+          },
+          {
+            "exercise_number": 2,
+            "type": "open_question",
+            "question": "A cube has a volume of 64 cubic units. What is the length of each edge?",
+            "inputLabel": "Enter your answer:",
+            "placeholder": "e.g. 4",
+            "answer": "4",
+            "showAnswerButton": true,
+            "completed_at": null,
+            "steps": [
+              "Volume of a cube is edge length cubed",
+              "If V = x³ and V = 64, then x³ = 64",
+              "Therefore x = ∛64 = 4"
+            ]
+          },
+          {
+            "exercise_number": 3,
+            "type": "true_false",
+            "statements": [
+              {
+                "text": "If you triple a number 2 times, you multiply it by 9",
+                "answer": true
+              },
+              {
+                "text": "If you double a number 3 times, you multiply it by 6",
+                "answer": false
+              }
+            ],
+            "completed_at": null,
+            "steps": [
+              "Tripling twice: 3² = 9, so tripling twice multiplies by 9",
+              "Doubling three times: 2³ = 8, not 6, so doubling three times multiplies by 8"
+            ]
+          }
+        ]
+      }
+    }
+  },
   "quadratic_equations": {
     "id": 3,
     "name": "Quadratic Equations",

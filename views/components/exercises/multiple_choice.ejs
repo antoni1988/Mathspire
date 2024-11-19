@@ -17,6 +17,26 @@
       >
     </div>
   <% } %>
+
+  <form id="form-<%= exercise.id %>" onsubmit="validateAnswer(event, <%= exercise.id %>, 'multiple_choice')" class="mt-3">
+    <div class="options">
+      <% exercise.options.forEach((option, index) => { %>
+        <div class="form-check mb-2">
+          <input 
+            class="form-check-input" 
+            type="radio" 
+            name="answer-<%= exercise.id %>" 
+            id="option-<%= exercise.id %>-<%= index %>" 
+            value="<%= index %>"
+            required
+          >
+          <label class="form-check-label" for="option-<%= exercise.id %>-<%= index %>">
+            <%= option %>
+          </label>
+        </div>
+      <% }); %>
+    </div>
+    
     <div id="feedback-<%= exercise.id %>"></div>
     <div class="btn-group mt-2">
       <button type="submit" class="btn btn-primary">Submit</button>
@@ -27,6 +47,7 @@
       <% } %>
     </div>
   </form>
+  
   <% if (exercise.steps) { %>
     <%- include('../solution_steps', { exercise }) %>
   <% } %>

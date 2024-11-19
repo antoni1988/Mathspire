@@ -18,13 +18,11 @@ class ExerciseController {
         pageNumber,
         userId
       );
-      const exerciseType = Exercise.getExerciseTypeByPage(pageNumber);
 
       res.render("exercise_view", {
         Exercise,
         dbExercises: exercises,
         topicId,
-        exerciseType,
         currentPage: parseInt(pageNumber),
         totalPages,
         req,

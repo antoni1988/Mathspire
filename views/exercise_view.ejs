@@ -1,5 +1,10 @@
 <%
-const { pageTitle, topicName, exercises } = Exercise.getPageExercises(topicId, exerciseType);
+const exerciseData = Exercise.getPageExercises(topicId, currentPage);
+if (!exerciseData) {
+  throw new Error(`No exercises found for topic ${topicId}, page ${currentPage}`);
+}
+
+const { pageTitle, topicName, exercises } = exerciseData;
 
 if (typeof dbExercises !== 'undefined') {
   exercises.forEach(ex => {

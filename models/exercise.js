@@ -12,13 +12,24 @@ class Exercise {
     this.completed_at = data.completed_at;
   }
 
-  static getPageExercises(topicId, pageName) {
-    const topic = Object.values(exercises).find((t) => t.id === topicId);
-    if (!topic || !topic.pages[pageName]) return null;
+  static getPageExercises(topicId, pageNumber) {
+    // Find topic
+    const topicData = Object.values(exercises).find(
+      (t) => t.id === parseInt(topicId)
+    );
+    if (!topicData) return null;
+
+    // Get all pages as an array
+    const pages = Object.values(topicData.pages);
+
+    // Get page by index (pageNumber - 1 since pages start at 1)
+    const page = pages[pageNumber - 1];
+    if (!page) return null;
+
     return {
-      pageTitle: topic.pages[pageName].title,
-      topicName: topic.name,
-      exercises: topic.pages[pageName].exercises,
+      pageTitle: page.title,
+      topicName: topicData.name,
+      exercises: page.exercises,
     };
   }
 
