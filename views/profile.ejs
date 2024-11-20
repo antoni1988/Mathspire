@@ -20,7 +20,12 @@
 
         <div class="card mb-4">
             <div class="card-body">
-                <h5 class="card-title">Username: <%= user.username %></h5>
+                <div class="mb-3">
+                    <h5 class="card-title">Profile Information</h5>
+                    <p><strong>Username:</strong> <%= user.username %></p>
+                    <p><strong>Email:</strong> <%= user.email %></p>
+                    <p><strong>Member since:</strong> <%= user.joined_date %></p>
+                </div>
                 
                 <!-- Reset Progress Button with Confirmation -->
                 <div class="mt-4">

@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/user");
+const userService = require("../services/userService");
 const db = require("../db");
-
 const { requireGuest } = require("../middleware/auth");
 
-router.get("/",requireGuest, (req, res) => {
+
+
+router.get("/", requireGuest, (req, res) => {
   res.render("home", { req });
 });
 
@@ -14,40 +15,35 @@ router.get("/register", requireGuest, (req, res) => {
 });
 
 
-
-router.post("/register", (req, res) => {
-  const { username, password } = req.body;
-  User.create(username, password, (err) => {
-    if (err) {
-      if (err.code === "ER_DUP_ENTRY") {
-        return res.render("register", {
-          req,
-          error: "Username already exists. Please choose another username.",
-        });
-      }
-      console.error(err);
+router.post("/register", async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+    await userService.create(username, email, password);
+    res.redirect("/login");
+  } catch (err) {
+    if (err.code === "ER_DUP_ENTRY") {
       return res.render("register", {
         req,
-        error: "An error occurred during registration.",
+        error: "Username or email already exists. Please choose another.",
       });
     }
-    res.redirect("/login");
-  });
+    console.error(err);
+    res.render("register", {
+      req,
+      error: "An error occurred during registration.",
+    });
+  }
 });
 
 router.get("/login", requireGuest, (req, res) => {
   res.render("login", { req });
 });
 
-router.post("/login", (req, res) => {
-  const { username, password } = req.body;
-  User.authenticate(username, password, (err, user) => {
-    if (err) {
-      return res.render("login", {
-        req,
-        error: "An error occurred during login.",
-      });
-    }
+router.post("/login", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await userService.authenticate(username, password);
+
     if (user) {
       req.session.userId = user.id;
       res.redirect("/dashboard");
@@ -57,7 +53,12 @@ router.post("/login", (req, res) => {
         error: "Invalid username or password.",
       });
     }
-  });
+  } catch (err) {
+    res.render("login", {
+      req,
+      error: "An error occurred during login.",
+    });
+  }
 });
 
 
@@ -66,7 +67,8 @@ router.post("/reset-progress", (req, res) => {
     return res.redirect("/login");
   }
 
-  User.resetProgress(req.session.userId)
+  userService
+    .resetProgress(req.session.userId) // Change User to userService
     .then(() => {
       res.redirect("/profile?reset=success");
     })
@@ -83,7 +85,7 @@ router.get("/dashboard", async (req, res) => {
 
   try {
     const userId = req.session.userId;
-    const userStats = await User.getUserStats(userId);
+    const userStats = await userService.getUserStats(userId); // Changed from User to userService
 
     const [userResults] = await db
       .promise()
@@ -163,15 +165,15 @@ router.get("/profile", (req, res) => {
   if (!req.session.userId) {
     return res.redirect("/login");
   }
-  
+
   db.query(
-    "SELECT username FROM users WHERE id = ?", 
+    "SELECT username, email, DATE_FORMAT(created_at, '%M %d, %Y') as joined_date FROM users WHERE id = ?",
     [req.session.userId],
     (err, results) => {
       if (err) throw err;
-      res.render("profile", { 
+      res.render("profile", {
         req,
-        user: results[0]
+        user: results[0],
       });
     }
   );

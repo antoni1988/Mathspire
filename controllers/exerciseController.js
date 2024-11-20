@@ -1,52 +1,49 @@
-const Exercise = require("../models/exercise");
-const Topic = require("../models/topic");
+const exerciseService = require("../services/exerciseService");
+const topicService = require("../services/topicService");
 
-class ExerciseController {
-  static async show(req, res) {
-    try {
-      const { id: topicId, exerciseId: pageNumber } = req.params;
-      const userId = req.session.userId;
+const show = async (req, res) => {
+  try {
+    const { id: topicId, exerciseId: pageNumber } = req.params;
+    const userId = req.session.userId;
 
-      const topic = await Topic.findById(topicId);
-      if (!topic) {
-        return res.status(404).send("Topic not found");
-      }
-
-      const totalPages = await Exercise.countPages(topicId);
-      const exercises = await Exercise.findByTopicAndPage(
-        topicId,
-        pageNumber,
-        userId
-      );
-
-      res.render("exercise_view", {
-        Exercise,
-        dbExercises: exercises,
-        topicId,
-        currentPage: parseInt(pageNumber),
-        totalPages,
-        req,
-      });
-    } catch (err) {
-      console.error("Error:", err);
-      res.status(500).send("An error occurred");
+    const topic = await topicService.findTopicById(topicId);
+    if (!topic) {
+      return res.status(404).send("Topic not found");
     }
+
+    const [totalPages, exercises] = await Promise.all([
+      exerciseService.countPages(topicId),
+      exerciseService.findByTopicAndPage(topicId, pageNumber, userId),
+    ]);
+
+    res.render("exercise_view", {
+      Exercise: exerciseService,
+      dbExercises: exercises,
+      topicId,
+      currentPage: parseInt(pageNumber),
+      totalPages,
+      req,
+    });
+  } catch (err) {
+    console.error("Error:", err);
+    res.status(500).send("An error occurred");
   }
+};
 
-  static async trackProgress(req, res) {
-    try {
-      const { topicId, exerciseId } = req.params;
-      const userId = req.session.userId;
+const trackProgress = async (req, res) => {
+  try {
+    const { topicId, exerciseId } = req.params;
+    const userId = req.session.userId;
 
-      const exercise = new Exercise({ id: exerciseId });
-      await exercise.markComplete(userId);
-
-      res.status(200).send("Progress saved successfully");
-    } catch (err) {
-      console.error("Error saving progress:", err);
-      res.status(500).send("Error saving progress");
-    }
+    await exerciseService.markComplete(exerciseId, userId);
+    res.status(200).send("Progress saved successfully");
+  } catch (err) {
+    console.error("Error saving progress:", err);
+    res.status(500).send("Error saving progress");
   }
-}
+};
 
-module.exports = ExerciseController;
+module.exports = {
+  show,
+  trackProgress,
+};

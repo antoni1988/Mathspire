@@ -1,42 +1,42 @@
-const Topic = require("../models/topic");
+const topicService = require("../services/topicService");
 
-class TopicController {
-  static async index(req, res) {
-    try {
-      const topics = await Topic.findAll();
-      res.render("topics", { topics, req });
-    } catch (err) {
-      console.error(err);
-      res.status(500).send("Error loading topics");
-    }
+const index = async (req, res) => {
+  try {
+    const topics = await topicService.findAllTopics();
+    res.render("topics", { topics, req });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error loading topics");
   }
+};
 
-  static async show(req, res) {
-    try {
-      const topic = await Topic.findById(req.params.id);
-      if (!topic) return res.status(404).send("Topic not found");
+const show = async (req, res) => {
+  try {
+    const topicDetails = await topicService.getTopicWithDetails(
+      req.params.id,
+      req.session.userId
+    );
 
-      topic.userId = req.session.userId;
-
-      const prerequisites = await topic.getPrerequisites();
-      const progress = await topic.getProgress(req.session.userId);
-      const exerciseGroups = await topic.getExerciseGroups();
-
-      res.render(
-        `topics/${topic.name.toLowerCase().replace(/\s+/g, "_")}/index`,
-        {
-          topic,
-          prerequisites,
-          progress,
-          exerciseGroups,
-          req,
-        }
-      );
-    } catch (err) {
-      console.error(err);
-      res.status(500).send("Error loading topic");
+    if (!topicDetails) {
+      return res.status(404).send("Topic not found");
     }
-  }
-}
 
-module.exports = TopicController;
+    res.render(
+      `topics/${topicDetails.name.toLowerCase().replace(/\s+/g, "_")}/index`,
+      {
+        topic: topicDetails,
+        prerequisites: topicDetails.prerequisites || [],
+        exerciseGroups: topicDetails.exerciseGroups || [],
+        req,
+      }
+    );
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error loading topic");
+  }
+};
+
+module.exports = {
+  index,
+  show,
+};
