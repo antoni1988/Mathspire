@@ -1,5 +1,5 @@
 <%
-const exerciseData = Exercise.getPageExercises(topicId, currentPage);
+const exerciseData = Exercise.getExerciseData(topicId, currentPage);
 if (!exerciseData) {
   throw new Error(`No exercises found for topic ${topicId}, page ${currentPage}`);
 }

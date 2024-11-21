@@ -1,8 +1,8 @@
-const topicService = require("../services/topicService");
+const Topic = require("../models/Topic");
 
 const index = async (req, res) => {
   try {
-    const topics = await topicService.findAllTopics();
+    const topics = await Topic.findAll();
     res.render("topics", { topics, req });
   } catch (err) {
     console.error(err);
@@ -12,21 +12,18 @@ const index = async (req, res) => {
 
 const show = async (req, res) => {
   try {
-    const topicDetails = await topicService.getTopicWithDetails(
-      req.params.id,
-      req.session.userId
-    );
+    const topic = await Topic.getWithDetails(req.params.id, req.session.userId);
 
-    if (!topicDetails) {
+    if (!topic) {
       return res.status(404).send("Topic not found");
     }
 
     res.render(
-      `topics/${topicDetails.name.toLowerCase().replace(/\s+/g, "_")}/index`,
+      `topics/${topic.name.toLowerCase().replace(/\s+/g, "_")}/index`,
       {
-        topic: topicDetails,
-        prerequisites: topicDetails.prerequisites || [],
-        exerciseGroups: topicDetails.exerciseGroups || [],
+        topic,
+        prerequisites: topic.prerequisites,
+        exerciseGroups: topic.exerciseGroups,
         req,
       }
     );
