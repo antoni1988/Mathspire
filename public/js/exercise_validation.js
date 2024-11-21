@@ -14,7 +14,12 @@ const ExerciseValidator = {
   },
 
   validateOpen(input, answer) {
-    return input.trim().toLowerCase() === answer.toLowerCase();
+    input = input.trim().toLowerCase();
+    answer = answer.toLowerCase();
+    return this.normalizeExpression(input) === this.normalizeExpression(answer);
+  },
+  normalizeExpression(expr) {
+    return expr.replace(/\s+/g, "").replace(/×/g, "*").replace(/÷/g, "/");
   },
 };
 
@@ -24,6 +29,7 @@ function validateAnswer(event, exerciseId, type) {
   const exercise = exercises.find((ex) => ex.id === exerciseId);
   if (!exercise) {
     console.error(`Exercise ${exerciseId} not found`);
+    showError(exerciseId, "Exercise not found. Please refresh the page.");
     return;
   }
 

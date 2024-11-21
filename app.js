@@ -22,7 +22,7 @@ app.use(
   session({
     secret: "your_secret_key",
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
   })
 );
 app.use(bodyParser.urlencoded({ extended: true }));

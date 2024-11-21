@@ -57,7 +57,6 @@ const getProgress = async (topicId, userId) => {
   };
 };
 
-// Business logic functions
 const getTopicWithDetails = async (topicId, userId) => {
   const topic = await findTopicById(topicId);
   if (!topic) return null;
