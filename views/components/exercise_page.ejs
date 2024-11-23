@@ -30,6 +30,15 @@
     <script src="/js/exercise_validation.js"></script>
     <script>
       const exercises = <%- JSON.stringify(exercises) %>;
+      document.addEventListener("DOMContentLoaded", function() {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true}
+      ],
+      throwOnError: false
+    });
+  });
     </script>
     <%- include('../partials/footer') %>
   </body>

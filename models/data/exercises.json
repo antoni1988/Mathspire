@@ -1,4 +1,5 @@
-{"powers_and_exponents": {
+{
+  "powers_and_exponents": {
     "id": 2,
     "name": "Powers and Exponents",
     "pages": {
@@ -8,15 +9,15 @@
           {
             "exercise_number": 1,
             "type": "multiple_choice",
-            "question": "What is 2³?",
+            "question": "What is \\(2^3\\)?",
             "options": ["4", "6", "8", "16"],
             "answer": 2,
             "completed_at": null,
             "steps": [
-              "Write out 2³ as repeated multiplication",
-              "2³ = 2 × 2 × 2",
-              "First multiply 2 × 2 = 4",
-              "Then multiply 4 × 2 = 8"
+              "Write out \\(2^3\\) as repeated multiplication",
+              "\\(2^3 = 2 \\times 2 \\times 2\\)",
+              "First multiply \\(2 \\times 2 = 4\\)",
+              "Then multiply \\(4 \\times 2 = 8\\)"
             ]
           },
           {
@@ -24,36 +25,36 @@
             "type": "true_false",
             "statements": [
               {
-                "text": "2⁴ = 16",
+                "text": "\\(2^4 = 16\\)",
                 "answer": true
               },
               {
-                "text": "3² = 6",
+                "text": "\\(3^2 = 6\\)",
                 "answer": false
               }
             ],
             "completed_at": null,
             "steps": [
-              "For 2⁴: Multiply 2 × 2 × 2 × 2 = 16",
-              "For 3²: Multiply 3 × 3 = 9, not 6"
+              "For \\(2^4\\): Multiply \\(2 \\times 2 \\times 2 \\times 2 = 16\\)",
+              "For \\(3^2\\): Multiply \\(3 \\times 3 = 9\\), not 6"
             ]
           },
           {
             "exercise_number": 3,
             "type": "open_question",
-            "question": "Simplify: 2³ × 2²",
+            "question": "Simplify: \\(2^3 \\times 2^2\\)",
             "inputLabel": "Enter your answer as a single power of 2:",
-            "placeholder": "e.g. 2⁵",
-            "answer": "2⁵",
+            "placeholder": "e.g. (2^2)",
+            "answer": "2^5",
             "showAnswerButton": true,
             "completed_at": null,
             "steps": [
               "Write out each power as repeated multiplication",
-              "2³ = 2 × 2 × 2",
-              "2² = 2 × 2",
-              "Combine: 2³ × 2² = (2 × 2 × 2) × (2 × 2)",
+              "\\(2^3 = 2 \\times 2 \\times 2\\)",
+              "\\(2^2 = 2 \\times 2\\)",
+              "Combine: \\(2^3 \\times 2^2 = (2 \\times 2 \\times 2) \\times (2 \\times 2)\\)",
               "Count total number of 2's: 5",
-              "Therefore, 2³ × 2² = 2⁵"
+              "Therefore, \\(2^3 \\times 2^2 = 2^5\\)"
             ]
           }
         ]
@@ -64,29 +65,29 @@
           {
             "exercise_number": 1,
             "type": "open_question",
-            "question": "Simplify: (2³)²",
+            "question": "Simplify: \\((2^3)^2\\)",
             "inputLabel": "Enter your answer as a single power of 2:",
-            "placeholder": "e.g. 2⁶",
-            "answer": "2⁶",
+            "placeholder": "e.g. \\(2^6\\)",
+            "answer": "\\(2^6\\)",
             "showAnswerButton": true,
             "completed_at": null,
             "steps": [
-              "Use the power rule: (x^m)^n = x^(m×n)",
-              "Here, m = 3 and n = 2",
-              "So (2³)² = 2^(3×2) = 2⁶"
+              "Use the power rule: \\((x^m)^n = x^{m \\times n}\\)",
+              "Here, \\(m = 3\\) and \\(n = 2\\)",
+              "So \\((2^3)^2 = 2^{3 \\times 2} = 2^6\\)"
             ]
           },
           {
             "exercise_number": 2,
             "type": "multiple_choice",
-            "question": "Simplify: 2⁴ ÷ 2²",
-            "options": ["2²", "2⁶", "2⁸", "4"],
+            "question": "Simplify: \\(2^4 \\div 2^2\\)",
+            "options": ["\\(2^2\\)", "\\(2^6\\)", "\\(2^8\\)", "4"],
             "answer": 0,
             "completed_at": null,
             "steps": [
-              "Use the quotient rule: x^m ÷ x^n = x^(m-n)",
-              "Here, m = 4 and n = 2",
-              "So 2⁴ ÷ 2² = 2^(4-2) = 2²"
+              "Use the quotient rule: \\(x^m \\div x^n = x^{m-n}\\)",
+              "Here, \\(m = 4\\) and \\(n = 2\\)",
+              "So \\(2^4 \\div 2^2 = 2^{4-2} = 2^2\\)"
             ]
           },
           {
@@ -94,18 +95,18 @@
             "type": "true_false",
             "statements": [
               {
-                "text": "(x²)³ = x⁶",
+                "text": "\\((x^2)^3 = x^6\\)",
                 "answer": true
               },
               {
-                "text": "x⁴ ÷ x² = x",
+                "text": "\\(x^4 \\div x^2 = x\\)",
                 "answer": false
               }
             ],
             "completed_at": null,
             "steps": [
-              "For (x²)³: Use power rule (x^m)^n = x^(m×n), so (x²)³ = x^(2×3) = x⁶",
-              "For x⁴ ÷ x²: Use quotient rule x^m ÷ x^n = x^(m-n), so x⁴ ÷ x² = x^(4-2) = x²"
+              "For \\((x^2)^3\\): Use power rule \\((x^m)^n = x^{m \\times n}\\), so \\((x^2)^3 = x^{2 \\times 3} = x^6\\)",
+              "For \\(x^4 \\div x^2\\): Use quotient rule \\(x^m \\div x^n = x^{m-n}\\), so \\(x^4 \\div x^2 = x^{4-2} = x^2\\)"
             ]
           }
         ]
@@ -121,9 +122,9 @@
             "answer": 3,
             "completed_at": null,
             "steps": [
-              "After 1 hour: 100 × 2¹ = 200 bacteria",
-              "After 2 hours: 100 × 2² = 400 bacteria",
-              "After 3 hours: 100 × 2³ = 800 bacteria"
+              "After 1 hour: \\(100 \\times 2^1 = 200\\) bacteria",
+              "After 2 hours: \\(100 \\times 2^2 = 400\\) bacteria",
+              "After 3 hours: \\(100 \\times 2^3 = 800\\) bacteria"
             ]
           },
           {
@@ -137,8 +138,8 @@
             "completed_at": null,
             "steps": [
               "Volume of a cube is edge length cubed",
-              "If V = x³ and V = 64, then x³ = 64",
-              "Therefore x = ∛64 = 4"
+              "If \\(V = x^3\\) and \\(V = 64\\), then \\(x^3 = 64\\)",
+              "Therefore \\(x = \\sqrt[3]{64} = 4\\)"
             ]
           },
           {
@@ -156,8 +157,8 @@
             ],
             "completed_at": null,
             "steps": [
-              "Tripling twice: 3² = 9, so tripling twice multiplies by 9",
-              "Doubling three times: 2³ = 8, not 6, so doubling three times multiplies by 8"
+              "Tripling twice: \\(3^2 = 9\\), so tripling twice multiplies by 9",
+              "Doubling three times: \\(2^3 = 8\\), not 6, so doubling three times multiplies by 8"
             ]
           }
         ]
@@ -174,24 +175,24 @@
           {
             "exercise_number": 1,
             "type": "multiple_choice",
-            "question": "Solve the equation: x² + 2x + 1 = 0",
+            "question": "Solve the equation: \\(x^2 + 2x + 1 = 0\\)",
             "image": {
               "src": "/images/dark_Logo.png",
-              "alt": "Graph of x² + 2x + 1 showing vertex at (-1,0)"
+              "alt": "Graph of \\(x^2 + 2x + 1\\) showing vertex at (-1,0)"
             },
             "options": [
-              "x = -1",
-              "x = 1",
-              "x = -1 (twice)",
-              "x = 1 (twice)"
+              "\\(x = -1\\)",
+              "\\(x = 1\\)",
+              "\\(x = -1\\) (twice)",
+              "\\(x = 1\\) (twice)"
             ],
             "answer": 2,
             "completed_at": null,
             "steps": [
-              "First, recognize this is a perfect square trinomial: x² + 2x + 1 = (x + 1)²",
-              "Set (x + 1)² = 0",
-              "Therefore x + 1 = 0",
-              "Solve for x: x = -1",
+              "First, recognize this is a perfect square trinomial: \\(x^2 + 2x + 1 = (x + 1)^2\\)",
+              "Set \\((x + 1)^2 = 0\\)",
+              "Therefore \\(x + 1 = 0\\)",
+              "Solve for x: \\(x = -1\\)",
               "Since this is a perfect square, the solution -1 occurs twice"
             ]
           },
@@ -200,17 +201,17 @@
             "type": "true_false",
             "statements": [
               {
-                "text": "The quadratic equation ax² + bx + c = 0 has exactly two solutions when b² - 4ac > 0",
+                "text": "The quadratic equation \\(ax^2 + bx + c = 0\\) has exactly two solutions when \\(b^2 - 4ac > 0\\)",
                 "answer": true
               },
               {
-                "text": "If b² - 4ac = 0, the quadratic equation has one repeated solution",
+                "text": "If \\(b^2 - 4ac = 0\\), the quadratic equation has one repeated solution",
                 "answer": true
               }
             ],
             "completed_at": null,
             "steps": [
-              "The discriminant is b² - 4ac",
+              "The discriminant is \\(b^2 - 4ac\\)",
               "If the discriminant is positive, there are two real solutions",
               "If the discriminant is zero, there is one repeated real solution",
               "If the discriminant is negative, there are two complex solutions"
@@ -219,22 +220,22 @@
           {
             "exercise_number": 3,
             "type": "open_question",
-            "question": "Solve x² - 4 = 0 using the quadratic formula. Enter your answers separated by a comma.",
+            "question": "Solve \\(x^2 - 4 = 0\\) using the quadratic formula. Enter your answers separated by a comma.",
             "inputLabel": "Enter your answer in the form \"a,b\" where a and b are the solutions:",
             "placeholder": "e.g. -2,2",
             "answer": "-2,2",
             "showAnswerButton": true,
             "completed_at": null,
             "steps": [
-              "The quadratic formula is x = (-b ± √(b² - 4ac)) / 2a",
-              "For x² - 4 = 0, a = 1, b = 0, and c = -4",
+              "The quadratic formula is \\(x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}\\)",
+              "For \\(x^2 - 4 = 0\\), \\(a = 1\\), \\(b = 0\\), and \\(c = -4\\)",
               "Substitute these values into the formula and solve for x"
             ]
           },
           {
             "exercise_number": 4,
             "type": "multiple_choice",
-            "question": "For the equation x² + 6x + 9 = 0, the discriminant (b² - 4ac) is:",
+            "question": "For the equation \\(x^2 + 6x + 9 = 0\\), the discriminant \\(b^2 - 4ac\\) is:",
             "options": [
               "36",
               "0",
@@ -252,12 +253,12 @@
           {
             "exercise_number": 1,
             "type": "multiple_choice",
-            "question": "What is the factored form of x² - 4x + 4?",
+            "question": "What is the factored form of \\(x^2 - 4x + 4\\)?",
             "options": [
-              "(x-2)(x-2)",
-              "(x+2)(x+2)",
-              "(x-2)(x+2)",
-              "(x-4)(x+1)"
+              "\\((x-2)(x-2)\\)",
+              "\\((x+2)(x+2)\\)",
+              "\\((x-2)(x+2)\\)",
+              "\\((x-4)(x+1)\\)"
             ],
             "answer": 0,
             "completed_at": null
@@ -267,11 +268,11 @@
             "type": "true_false",
             "statements": [
               {
-                "text": "The expression x² + 6x + 9 can be factored as (x+3)(x+3)",
+                "text": "The expression \\(x^2 + 6x + 9\\) can be factored as \\((x+3)(x+3)\\)",
                 "answer": true
               },
               {
-                "text": "The expression x² - 9 can be factored as (x+3)(x-3)",
+                "text": "The expression \\(x^2 - 9\\) can be factored as \\((x+3)(x-3)\\)",
                 "answer": true
               }
             ],
@@ -280,8 +281,8 @@
           {
             "exercise_number": 3,
             "type": "open_question",
-            "question": "Factor the expression: x² - 2x - 8",
-            "inputLabel": "Enter your answer in the form (x±a)(x±b):",
+            "question": "Factor the expression: \\(x^2 - 2x - 8\\)",
+            "inputLabel": "Enter your answer in the form \\((x \\pm a)(x \\pm b)\\):",
             "placeholder": "e.g. (x+2)(x-4)",
             "answer": "(x+2)(x-4)",
             "showAnswerButton": true,
@@ -295,7 +296,7 @@
           {
             "exercise_number": 1,
             "type": "multiple_choice",
-            "question": "A ball is thrown upward with an initial velocity of 20 m/s. The height h (in meters) after t seconds is given by h = -4.9t² + 20t. What is the maximum height reached by the ball?",
+            "question": "A ball is thrown upward with an initial velocity of 20 m/s. The height \\(h\\) (in meters) after \\(t\\) seconds is given by \\(h = -4.9t^2 + 20t\\). What is the maximum height reached by the ball?",
             "options": [
               "10 meters",
               "20.4 meters",

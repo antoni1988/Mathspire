@@ -20,6 +20,15 @@ function getRelativeTimeString(date) {
     <main>
       <div class="container mt-5">
         <h1>Welcome back, <%= user.username %>!</h1>
+
+        <!-- Unavailable topic error message -->
+        <% if (req.session.errorMessage) { %>
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <%= req.session.errorMessage %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          <% req.session.errorMessage = null; %>
+        <% } %>
         
         <!-- Activity Tracker -->
         <div class="card mb-4">

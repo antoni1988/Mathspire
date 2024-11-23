@@ -18,58 +18,157 @@ const ExerciseValidator = {
     answer = answer.toLowerCase();
     return this.normalizeExpression(input) === this.normalizeExpression(answer);
   },
+
   normalizeExpression(expr) {
     return expr.replace(/\s+/g, "").replace(/×/g, "*").replace(/÷/g, "/");
   },
 };
 
+
+class UnauthorizedError extends Error {
+  constructor() {
+    super("Unauthorized");
+    this.name = "UnauthorizedError";
+  }
+}
+
+class ExerciseNotFoundError extends Error {
+  constructor(exerciseId) {
+    super(`Exercise ${exerciseId} not found`);
+    this.name = "ExerciseNotFoundError";
+  }
+}
+
+
+const ErrorHandler = {
+  handleApiError(error, exerciseId) {
+    console.error("API Error:", error);
+    if (error instanceof UnauthorizedError) {
+      window.location.href = "/login";
+      return;
+    }
+    this.showErrorMessage(
+      exerciseId,
+      "Error saving progress. Please try again."
+    );
+  },
+
+  handleValidationError(exerciseId, error) {
+    console.error("Validation Error:", error);
+    if (error instanceof ExerciseNotFoundError) {
+      this.showErrorMessage(
+        exerciseId,
+        "Exercise not found. Please refresh the page."
+      );
+      return;
+    }
+    this.showErrorMessage(exerciseId, "Incorrect. Try again!");
+  },
+
+  showErrorMessage(exerciseId, message) {
+    document.getElementById(
+      `feedback-${exerciseId}`
+    ).innerHTML = `<div class="alert alert-danger">${message}</div>`;
+  },
+};
+
+const UIManager = {
+  addCompletionCheckmark(exerciseDiv) {
+    const checkmark = document.createElement("div");
+    checkmark.className = "position-absolute top-0 end-0 mt-2 me-2";
+    checkmark.innerHTML =
+      '<i class="fas fa-check-circle text-success" title="Completed"></i>';
+    exerciseDiv.appendChild(checkmark);
+  },
+
+  showSuccess(exerciseId) {
+    document.getElementById(`feedback-${exerciseId}`).innerHTML =
+      '<div class="alert alert-success">Correct! Your progress has been saved.</div>';
+  },
+
+  disableForm(exerciseId) {
+    const form = document.getElementById(`form-${exerciseId}`);
+    form.querySelectorAll("input").forEach((el) => (el.disabled = true));
+    form.querySelectorAll("button").forEach((btn) => {
+      const buttonText = btn.textContent.trim();
+      if (buttonText !== "Show Steps" && buttonText !== "Hide Steps") {
+        btn.disabled = true;
+      }
+    });
+  },
+
+  markExerciseComplete(exerciseId) {
+    const exerciseDiv = document
+      .querySelector(`#form-${exerciseId}`)
+      .closest(".exercise");
+    if (exerciseDiv) {
+      this.addCompletionCheckmark(exerciseDiv);
+    }
+  },
+
+  disableShowAnswerButton(exerciseId) {
+  const form = document.getElementById(`form-${exerciseId}`);
+  if (!form) return;
+
+  const buttons = form.querySelectorAll("button");
+  buttons.forEach((btn) => {
+    if (btn.textContent.trim() === "Show Answer") {
+      btn.disabled = true;
+    }
+  });
+}
+};
+
 function validateAnswer(event, exerciseId, type) {
   event.preventDefault();
   let isCorrect = false;
-  const exercise = exercises.find((ex) => ex.id === exerciseId);
-  if (!exercise) {
-    console.error(`Exercise ${exerciseId} not found`);
-    showError(exerciseId, "Exercise not found. Please refresh the page.");
-    return;
+
+  try {
+    const exercise = exercises.find((ex) => ex.id === exerciseId);
+    if (!exercise) {
+      throw new ExerciseNotFoundError(exerciseId);
+    }
+
+    switch (type) {
+      case "multiple_choice":
+        const selected = document.querySelector(
+          `input[name="answer-${exerciseId}"]:checked`
+        );
+        isCorrect = ExerciseValidator.validateMultipleChoice(
+          selected,
+          exercise.answer
+        );
+        break;
+
+      case "true_false":
+        const selections = exercise.statements.map((_, index) =>
+          document.querySelector(
+            `input[name="answer-${exerciseId}-${index}"]:checked`
+          )
+        );
+        isCorrect = ExerciseValidator.validateTrueFalse(
+          selections,
+          exercise.statements
+        );
+        break;
+
+      case "open_question":
+        const answer = document.getElementById(`answer-${exerciseId}`).value;
+        isCorrect = ExerciseValidator.validateOpen(answer, exercise.answer);
+        break;
+    }
+
+    handleExerciseResult(exerciseId, isCorrect);
+  } catch (error) {
+    ErrorHandler.handleValidationError(exerciseId, error);
   }
-
-  switch (type) {
-    case "multiple_choice":
-      const selected = document.querySelector(
-        `input[name="answer-${exerciseId}"]:checked`
-      );
-      isCorrect = ExerciseValidator.validateMultipleChoice(
-        selected,
-        exercise.answer
-      );
-      break;
-
-    case "true_false":
-      const selections = exercise.statements.map((_, index) =>
-        document.querySelector(
-          `input[name="answer-${exerciseId}-${index}"]:checked`
-        )
-      );
-      isCorrect = ExerciseValidator.validateTrueFalse(
-        selections,
-        exercise.statements
-      );
-      break;
-
-    case "open_question":
-      const answer = document.getElementById(`answer-${exerciseId}`).value;
-      isCorrect = ExerciseValidator.validateOpen(answer, exercise.answer);
-      break;
-  }
-
-  handleExerciseResult(exerciseId, isCorrect);
 }
 
 function handleExerciseResult(exerciseId, isCorrect) {
   if (isCorrect) {
     saveProgress(exerciseId);
   } else {
-    showError(exerciseId);
+    ErrorHandler.showErrorMessage(exerciseId, "Incorrect. Try again!");
   }
 }
 
@@ -80,13 +179,12 @@ function saveProgress(exerciseId) {
   fetch(`/topics/${topicId}/exercises/${exerciseId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    credentials: "same-origin", // Important for session cookies
+    credentials: "same-origin",
     body: JSON.stringify({ exerciseId }),
   })
     .then((response) => {
       if (response.status === 401) {
-        window.location.href = "/login"; // Redirect to login if unauthorized
-        throw new Error("Unauthorized");
+        throw new UnauthorizedError();
       }
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -94,54 +192,23 @@ function saveProgress(exerciseId) {
       return response.text();
     })
     .then(() => {
-      showSuccess(exerciseId);
-      disableForm(exerciseId);
-      const exerciseDiv = document
-        .querySelector(`#form-${exerciseId}`)
-        .closest(".exercise");
-      if (exerciseDiv) {
-        const checkmark = document.createElement("div");
-        checkmark.className = "position-absolute top-0 end-0 mt-2 me-2";
-        checkmark.innerHTML =
-          '<i class="fas fa-check-circle text-success" title="Completed"></i>';
-        exerciseDiv.appendChild(checkmark);
-      }
+      UIManager.showSuccess(exerciseId);
+      UIManager.disableForm(exerciseId);
+      UIManager.markExerciseComplete(exerciseId);
     })
-    .catch((error) => {
-      console.error("Error:", error);
-      if (error.message !== "Unauthorized") {
-        showError(exerciseId, "Error saving progress. Please try again.");
-      }
-    });
-}
-
-function showSuccess(exerciseId) {
-  document.getElementById(`feedback-${exerciseId}`).innerHTML =
-    '<div class="alert alert-success">Correct! Your progress has been saved.</div>';
-}
-
-function showError(exerciseId, message = "Incorrect. Try again!") {
-  document.getElementById(
-    `feedback-${exerciseId}`
-  ).innerHTML = `<div class="alert alert-danger">${message}</div>`;
-}
-
-function disableForm(exerciseId) {
-  document
-    .getElementById(`form-${exerciseId}`)
-    .querySelectorAll("input, button")
-    .forEach((el) => (el.disabled = true));
+    .catch((error) => ErrorHandler.handleApiError(error, exerciseId));
 }
 
 function toggleSteps(exerciseId) {
   const stepsElement = document.getElementById(`steps-${exerciseId}`);
   if (stepsElement) {
-    stepsElement.classList.toggle('show');
+    stepsElement.classList.toggle("show");
     const button = event.target;
-    button.textContent = stepsElement.classList.contains('show') ? 'Hide Steps' : 'Show Steps';
+    button.textContent = stepsElement.classList.contains("show")
+      ? "Hide Steps"
+      : "Show Steps";
   }
 }
-
 
 function showAnswer(exerciseId) {
   const exercise = exercises.find((ex) => ex.id === exerciseId);
@@ -152,18 +219,6 @@ function showAnswer(exerciseId) {
         <strong>Answer:</strong> ${exercise.answer}
       </div>
     `;
-    disableShowAnswerButton(exerciseId);
+    UIManager.disableShowAnswerButton(exerciseId);
   }
-}
-
-function disableShowAnswerButton(exerciseId) {
-  const form = document.getElementById(`form-${exerciseId}`);
-  if (!form) return;
-
-  const buttons = form.querySelectorAll("button");
-  buttons.forEach((btn) => {
-    if (btn.textContent.trim() === "Show Answer") {
-      btn.disabled = true;
-    }
-  });
 }

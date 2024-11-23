@@ -1,4 +1,6 @@
 const Topic = require("../models/Topic");
+const path = require("path");
+const fs = require("fs");
 
 const index = async (req, res) => {
   try {
@@ -15,7 +17,23 @@ const show = async (req, res) => {
     const topic = await Topic.getWithDetails(req.params.id, req.session.userId);
 
     if (!topic) {
-      return res.status(404).send("Topic not found");
+      req.session.errorMessage = "This topic is currently unavailable.";
+      return res.redirect("/dashboard");
+    }
+
+    // Check if topic view exists
+    const viewPath = path.join(
+      __dirname,
+      "..",
+      "views",
+      "topics",
+      topic.name.toLowerCase().replace(/\s+/g, "_"),
+      "index.ejs"
+    );
+
+    if (!fs.existsSync(viewPath)) {
+      req.session.errorMessage = `The topic "${topic.name}" is currently under development.`;
+      return res.redirect("/dashboard");
     }
 
     res.render(
@@ -29,7 +47,8 @@ const show = async (req, res) => {
     );
   } catch (err) {
     console.error(err);
-    res.status(500).send("Error loading topic");
+    req.session.errorMessage = "An error occurred while loading the topic.";
+    res.redirect("/dashboard");
   }
 };
 
