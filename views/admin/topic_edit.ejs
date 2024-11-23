@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%- include('../partials/header') %>
+  <title>Edit Topic</title>
+</head>
+<body>
+  <div class="container mt-5">
+    <h1>Edit Topic: <%= topic.name %></h1>
+    
+    <div class="card mb-4">
+      <div class="card-body">
+        <h5 class="card-title">Add Exercise</h5>
+        <form id="exerciseForm" class="needs-validation">
+          <div class="mb-3">
+            <label class="form-label">Exercise Type</label>
+            <select name="type" class="form-control" required>
+              <option value="multiple_choice">Multiple Choice</option>
+              <option value="true_false">True/False</option>
+              <option value="open_question">Open Question</option>
+            </select>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Question</label>
+            <textarea name="question" class="form-control" rows="3" required></textarea>
+          </div>
+
+          <div id="dynamicFields">
+            <!-- Dynamic fields based on exercise type -->
+          </div>
+
+          <button type="submit" class="btn btn-primary">Add Exercise</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Current Exercises</h5>
+        <div id="exercisesList">
+          <% exercises.forEach(function(exercise) { %>
+            <div class="list-group-item">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h6 class="mb-1">Question <%= exercise.exercise_number %></h6>
+                  <p class="mb-1"><%= exercise.question %></p>
+                  <small class="text-muted">Type: <%= exercise.type %></small>
+                </div>
+                <div class="btn-group">
+                  <button class="btn btn-sm btn-outline-danger" onclick="deleteExercise(<%= exercise.id %>)">Delete</button>
+                </div>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="/js/admin.js"></script>
+  <%- include('../partials/footer') %>
+</body>
+</html>

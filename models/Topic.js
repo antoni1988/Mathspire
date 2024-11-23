@@ -16,6 +16,16 @@ class Topic {
     return rows.map((row) => new Topic(row));
   }
 
+  static async create(data) {
+    const [result] = await db
+      .promise()
+      .query("INSERT INTO topics (name, description) VALUES (?, ?)", [
+        data.name,
+        data.description,
+      ]);
+    return result.insertId;
+  }
+
   static async findById(id) {
     const [rows] = await db
       .promise()
@@ -56,20 +66,39 @@ class Topic {
 
   // Exercise groups
   async getExerciseGroups(userId) {
-    const [rows] = await db.promise().query(
-      `SELECT 
-        e.exercise_type,
-        COUNT(*) as exercise_count,
-        MIN(e.page_number) as first_page,
-        COUNT(DISTINCT p.exercise_id) as completed_count
-       FROM exercises e
-       LEFT JOIN progress p ON p.exercise_id = e.id AND p.user_id = ?
-       WHERE e.topic_id = ?
-       GROUP BY e.exercise_type`,
-      [userId, this.id]
+    const exercises = require("./data/exercises.json");
+    const topicData = Object.values(exercises).find((t) => t.id === this.id);
+
+    if (!topicData || !topicData.pages) {
+      return [];
+    }
+
+    // Get completed exercises from database
+    const [completedRows] = await db.promise().query(
+      `SELECT e.id, e.page_number
+     FROM exercises e
+     JOIN progress p ON p.exercise_id = e.id 
+     WHERE e.topic_id = ? AND p.user_id = ?`,
+      [this.id, userId]
     );
-    this.exerciseGroups = rows;
-    return rows;
+
+    // Create groups by page
+    const groups = topicData.pages.map((page, index) => {
+      const pageNumber = index + 1;
+      const completedCount = completedRows.filter(
+        (row) => row.page_number === pageNumber
+      ).length;
+
+      return {
+        page_title: page.title,
+        exercise_count: page.exercises.length,
+        first_page: pageNumber,
+        completed_count: completedCount,
+      };
+    });
+
+    this.exerciseGroups = groups;
+    return groups;
   }
 
   // Load all details at once

@@ -2,8 +2,8 @@
   "powers_and_exponents": {
     "id": 2,
     "name": "Powers and Exponents",
-    "pages": {
-      "basic": {
+    "pages": [
+      {
         "title": "Basic Practice",
         "exercises": [
           {
@@ -59,7 +59,7 @@
           }
         ]
       },
-      "mixed": {
+      {
         "title": "Laws Practice",
         "exercises": [
           {
@@ -111,7 +111,7 @@
           }
         ]
       },
-      "word_problems": {
+      {
         "title": "Word Problems",
         "exercises": [
           {
@@ -163,13 +163,13 @@
           }
         ]
       }
-    }
+    ]
   },
   "quadratic_equations": {
     "id": 3,
     "name": "Quadratic Equations",
-    "pages": {
-      "basic": {
+    "pages": [
+      {
         "title": "Basic Practice",
         "exercises": [
           {
@@ -247,7 +247,7 @@
           }
         ]
       },
-      "mixed": {
+      {
         "title": "Mixed Practice",
         "exercises": [
           {
@@ -290,7 +290,7 @@
           }
         ]
       },
-      "word_problems": {
+      {
         "title": "Word Problems - Quadratic Equations",
         "exercises": [
           {
@@ -331,6 +331,6 @@
           }
         ]
       }
-    }
+    ]
   }
 }

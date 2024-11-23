@@ -21,30 +21,19 @@ const show = async (req, res) => {
       return res.redirect("/dashboard");
     }
 
-    // Check if topic view exists
-    const viewPath = path.join(
-      __dirname,
-      "..",
-      "views",
-      "topics",
-      topic.name.toLowerCase().replace(/\s+/g, "_"),
-      "index.ejs"
-    );
+    // Load topic content from JSON file
+    const topicContent = require(`../models/data/topics/${topic.name
+      .toLowerCase()
+      .replace(/\s+/g, "_")}.json`);
 
-    if (!fs.existsSync(viewPath)) {
-      req.session.errorMessage = `The topic "${topic.name}" is currently under development.`;
-      return res.redirect("/dashboard");
-    }
-
-    res.render(
-      `topics/${topic.name.toLowerCase().replace(/\s+/g, "_")}/index`,
-      {
-        topic,
-        prerequisites: topic.prerequisites,
-        exerciseGroups: topic.exerciseGroups,
-        req,
-      }
-    );
+    res.render("components/topic_template", {
+      topic,
+      prerequisites: topic.prerequisites,
+      exerciseGroups: topic.exerciseGroups,
+      introContent: topicContent.introContent,
+      theorySections: topicContent.theorySections,
+      req,
+    });
   } catch (err) {
     console.error(err);
     req.session.errorMessage = "An error occurred while loading the topic.";

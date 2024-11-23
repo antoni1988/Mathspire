@@ -1,6 +1,7 @@
 const express = require("express");
 const session = require("express-session");
 const bodyParser = require("body-parser");
+const authMiddleware = require("./middleware/auth");
 const mysql = require("mysql2");
 const path = require("path");
 
@@ -25,6 +26,11 @@ app.use(
     saveUninitialized: false,
   })
 );
+
+app.use(authMiddleware.loadUser);
+const adminRoutes = require("./routes/admin");
+app.use("/admin", adminRoutes);
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");

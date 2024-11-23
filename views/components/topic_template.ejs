@@ -93,20 +93,20 @@
                 <a href="/topics/<%= topic.id %>/exercises/<%= group.first_page %>" 
                   class="list-group-item list-group-item-action">
                   <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1"><%= group.exercise_type.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) %></h5>
-                    <small>
-                      <%= group.completed_count || 0 %>/<%= group.exercise_count %> completed
+                    <h5 class="mb-1"><%= group.page_title %></h5>
+                    <small class="text-<%= (group.completed_count === group.exercise_count) ? 'success' : 'muted' %>">
+                      <%= group.completed_count %>/<%= group.exercise_count %> completed
                     </small>  
                   </div>
-                  <div class="progress" style="height: 5px;">
-                    <div class="progress-bar" role="progressbar" 
-                        style="width: <%= Math.round((group.completed_count || 0) * 100 / group.exercise_count) %>%" 
-                        aria-valuenow="<%= group.completed_count || 0 %>" 
+                  <div class="progress mt-2" style="height: 5px;">
+                    <div class="progress-bar <%= (group.completed_count === group.exercise_count) ? 'bg-success' : 'bg-primary' %>" 
+                        role="progressbar" 
+                        style="width: <%= Math.round((group.completed_count) * 100 / group.exercise_count) %>%" 
+                        aria-valuenow="<%= group.completed_count %>" 
                         aria-valuemin="0" 
                         aria-valuemax="<%= group.exercise_count %>">
                     </div>
                   </div>
-                  <p class="mb-1 mt-2">Practice <%= group.exercise_type.replace(/_/g, ' ') %></p>
                 </a>
               <% }); %>
             </div>

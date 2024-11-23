@@ -7,6 +7,7 @@ class User {
     this.username = data.username;
     this.email = data.email;
     this.created_at = data.created_at;
+    this.is_admin = !!data.is_admin;
   }
 
   // Basic CRUD operations
@@ -28,6 +29,11 @@ class User {
       .query("SELECT * FROM users WHERE id = ?", [id]);
     return rows[0] ? new User(rows[0]) : null;
   }
+
+  isAdmin() {
+    return this.is_admin;
+  }
+  
 
   static async findByUsername(username) {
     const [rows] = await db

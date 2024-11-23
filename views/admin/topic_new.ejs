@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%- include('../partials/header') %>
+  <title>Create New Topic</title>
+</head>
+<body>
+  <div class="container mt-5">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="/admin/topics">Topics</a></li>
+        <li class="breadcrumb-item active">Create New Topic</li>
+      </ol>
+    </nav>
+
+    <h1>Create New Topic</h1>
+    
+    <div class="card">
+      <div class="card-body">
+        <form action="/admin/topics" method="POST">
+          <div class="mb-3">
+            <label class="form-label">Topic Name</label>
+            <input type="text" name="name" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea name="description" class="form-control" rows="3" required></textarea>
+          </div>
+          <div class="d-flex justify-content-between">
+            <a href="/admin/topics" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-primary">Create Topic</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/admin.js"></script>
+  <%- include('../partials/footer') %>
+</body>
+</html>

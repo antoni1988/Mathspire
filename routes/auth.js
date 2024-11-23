@@ -79,7 +79,7 @@ router.get("/dashboard", async (req, res) => {
 
   try {
     const user = await User.findById(req.session.userId);
-    const dashboardData = await user.getDashboardData();
+    const dashboardData = await req.user.getDashboardData();
 
     res.render("dashboard", {
       req,
@@ -92,8 +92,18 @@ router.get("/dashboard", async (req, res) => {
   }
 });
 
+router.get("/verify-session", (req, res) => {
+  if (req.session.userId && req.user) {
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(401);
+  }
+});
+
+
 router.get("/logout", (req, res) => {
   req.session.destroy();
+  res.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
   res.redirect("/login");
 });
 
